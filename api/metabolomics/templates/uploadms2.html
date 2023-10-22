@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Select MGF File for Import{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<form method="post" enctype="multipart/form-data" action=" {{ url_for('app_bp.upload_ms2', from_client='flask') }} ">
+    <label>Select file to upload</label>
+    <input type="file" name="file">
+
+    <button type="submit" value="Upload MS2">Upload</button>
+</form>
+
+{% endblock %}

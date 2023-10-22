@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Imported MS1 Data {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <table id="scanmst">
+        <tr>
+            <th>	Id	</th>
+            <th>	File Name	</th>
+            <th>    Imported On</th>
+        </tr>
+        <tr>
+            <td> {{ mst[0] }}  </td>
+            <td> {{ mst[1] }}  </td>
+            <td> {{ mst[2] }}  </td>
+        </tr>
+    </table>
+</div>
+
+<div>
+<table id="scandet">
+    <tr>
+        <th>	Compound Name	</th>
+        <th>	Charge	</th>
+    </tr>
+
+    {% for row in det %}
+        <tr>
+            <td> {{ row["compound_name"] }}  </td>
+            <td> {{ row["charge"] }}  </td>
+        </tr>
+
+    {% endfor %}
+  
+</table>
+</div>
+
+<div><a href="/">Home</a></div>
+
+
+{% endblock %}

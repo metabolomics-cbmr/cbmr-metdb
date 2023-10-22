@@ -1,0 +1,32 @@
+@import './bootstrap/bootstrap.scss';
+@import './fonts';
+@import './buttons';
+@import './forms';
+@import './typography';
+
+.float {
+  &--right {
+    float: right;
+  }
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.table__row--hoverable {
+  &:hover {
+    background-color: rgba(144, 26, 30, 0.04);
+    cursor: pointer;
+  }
+}
+
+.hoverable {
+  cursor: pointer;
+}
+
+.cursor {
+  &-pointer {
+    cursor: pointer;
+  }
+}

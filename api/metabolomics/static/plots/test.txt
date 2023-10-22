@@ -1,0 +1,1 @@
+To ensure that static/plots folder is created in git

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Unknown Compound Detection {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <table>
+        <tr><td>
+            Settings
+        </td>
+        <td>
+            {{ settings["matching_score"]["description"] }} : {{ settings["matching_score"]["threshold"] }} <br/>
+            {{ settings["matching_peaks"]["description"] }} : {{ settings["matching_peaks"]["threshold"] }} 
+        </td>
+    </tr>
+
+    <tr><td>
+        Summary
+    </td>
+    <td>
+        Precursor Mass tolerance for selecting reference compounds : {{ summary["precursor_mass_tolerance"] }} <br/>
+        Unique Compounds compared : {{ summary["unique_compounds_compared"] }} <br />
+        Total MS2 rows compared : {{ summary['total_ms2_rows_compared'] }} <br />
+        Matches exceeding threshold : {{ summary['matches_over_threhold'] }}
+    </td>
+</tr>
+
+</table>
+
+    <table id="scanmst"> 
+        {% for ele in results %}
+
+        <tr>
+            <td>
+                <table>
+                    
+                    <tr>
+                        <td rowspan="5" class="bold">Reference Compound <br/>( Spectrum 1 )</td>
+                        <td>Name :{{ ele["data"]["reference"]["name"] }}</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Scan number : {{ ele["data"]["reference"]["scan_number"] }}</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Precursor Mass : {{ ele["data"]["reference"]["precursor_mass"] }}</td>
+                    </tr>
+
+                    <tr>
+                        
+                        <td>Collision Energy : {{ ele["data"]["reference"]["collision_energy"] }}</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Retention Time (secs) : {{ ele["data"]["reference"]["retention_time"] }}</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5" class="bold">Query Compound <br/>( Spectrum 2 )</td>
+                        <td>Scan Number : {{ ele["data"]["query"]["scan_number"] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Precursor Mass : {{ ele["data"]["query"]["precursor_mass"] }}</td>
+                    </tr>
+
+                    <tr>
+                        
+                        <td>Collision Energy : {{ ele["data"]["query"]["collision_energy"] }}</td>
+                    </tr>
+                    <tr>
+                        
+                        <td>Retention Time (secs): {{ ele["data"]["query"]["retention_time"] }}</td>
+                    </tr>
+                    <tr>
+                        <!--<td colspab="2">3</td>-->
+                        <td colspan="2" class="bold">Similarity Function :  {{ ele["data"]["result"]["match_method"] }}</td>
+                    </tr>
+
+                    <tr>
+                        <!--<td colspab="2">3</td>-->
+                        <td colspan="2" class="bold">Number of Matching Peaks :  {{ ele["data"]["result"]["num_matching_peaks"] }}</td>
+                    </tr>
+                    <tr>
+                        <!--<td>3</td>-->
+                        <td colspan="2" class="bold">Score : {{ ele["data"]["result"]["score"] }} </td>
+                    </tr>
+                </table>
+            </td>
+            <td><img src ="{{ ele["data"]["image"]["mz_intensity"] }}" /></td>
+            <td>Reference Molecular Structure <br/><img src ="{{ ele["data"]["image"]["molecular_structure"] }}" /></td>
+    
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+<!-- <div>
+    <table id="scanmst">
+        {% for ele in output %}
+        <tr>
+            <th><Label</th>
+            <th>Details	</th>
+            <th>MZ vs Intensity </th>
+            <th> Molecular Structure</th>
+        </tr>
+        
+        <tr>
+            <td class="wrap"> {{ ele["label"] }} :  </td>
+            <td class="wrap"> {{  ele["data"] }}</td>
+            <td> <img src ="{{ ele["imgurl"] }}" />"  </td>
+            <td> <img src ="{{ ele["structure"] }}" />"  </td>
+
+        </tr>
+        {% endfor %}
+        
+    </table>
+</div> -->
+
+
+
+<div><a href="{{ url_for('app_bp.home') }}">Home</a></div>
+
+
+{% endblock %}

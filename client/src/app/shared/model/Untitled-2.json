@@ -1,0 +1,2341 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "ISA investigation schema",
+  "description": "JSON-schema representing an investigation in the ISA model",
+  "type": "object",
+  "properties": {
+    "@id": { "type": "string", "format": "uri" },
+    "filename": { "type": "string" },
+    "identifier": { "type": "string" },
+    "title": { "type": "string" },
+    "description": { "type": "string" },
+    "submissionDate": { "type": "string", "format": "date-time" },
+    "publicReleaseDate": { "type": "string", "format": "date-time" },
+    "ontologySourceReferences": {
+      "type": "array",
+      "items": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "title": "ISA ontology source reference schema",
+        "name": "ISA ontology source reference schema",
+        "description": "JSON-schema representing an ontology reference in the ISA model",
+        "type": "object",
+        "properties": {
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "comment_schema.json#"
+            }
+          },
+          "description": { "type": "string" },
+          "file": { "type": "string" },
+          "name": { "type": "string" },
+          "version": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "publications": {
+      "type": "array",
+      "items": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "title": "ISA investigation schema",
+        "name": "ISA investigation schema",
+        "description": "JSON-schema representing an investigation in the ISA model",
+        "type": "object",
+        "properties": {
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "comment_schema.json#"
+            }
+          },
+          "pubMedID": { "type": "string" },
+          "doi": { "type": "string" },
+          "authorList": { "type": "string" },
+          "title": { "type": "string" },
+          "status": {
+            "$ref": "ontology_annotation_schema.json#"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "title": "ISA person schema",
+        "description": "JSON-schema representing a person in the ISA model",
+        "type": "object",
+        "properties": {
+          "@id": { "type": "string", "format": "uri" },
+          "lastName": { "type": "string" },
+          "firstName": { "type": "string" },
+          "midInitials": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string" },
+          "fax": { "type": "string" },
+          "address": { "type": "string" },
+          "affiliation": { "type": "string" },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "ontology_annotation_schema.json#"
+            }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "comment_schema.json#"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "studies": {
+      "type": "array",
+      "items": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Study JSON Schema",
+        "description": "JSON Schema describing an Study",
+        "@context": {
+          "@base": "http://purl.org/isaterms/",
+          "xsd": "http://www.w3.org/2001/XMLSchema#"
+        },
+        "type": "object",
+        "properties": {
+          "@id": { "type": "string", "format": "uri" },
+          "filename": { "type": "string" },
+          "identifier": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "submissionDate": { "type": "string", "format": "date-time" },
+          "publicReleaseDate": { "type": "string", "format": "date-time" },
+          "publications": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA investigation schema",
+              "name": "ISA investigation schema",
+              "description": "JSON-schema representing an investigation in the ISA model",
+              "type": "object",
+              "properties": {
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                },
+                "pubMedID": { "type": "string" },
+                "doi": { "type": "string" },
+                "authorList": { "type": "string" },
+                "title": { "type": "string" },
+                "status": {
+                  "$ref": "ontology_annotation_schema.json#"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "people": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA person schema",
+              "description": "JSON-schema representing a person in the ISA model",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "lastName": { "type": "string" },
+                "firstName": { "type": "string" },
+                "midInitials": { "type": "string" },
+                "email": { "type": "string", "format": "email" },
+                "phone": { "type": "string" },
+                "fax": { "type": "string" },
+                "address": { "type": "string" },
+                "affiliation": { "type": "string" },
+                "roles": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "ontology_annotation_schema.json#"
+                  }
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "studyDesignDescriptors": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA ontology reference schema",
+              "name": "ISA ontology reference schema",
+              "description": "JSON-schema representing an ontology reference or annotation in the ISA model (for fields that are required to be ontology annotations)",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "annotationValue": {
+                  "anyOf": [{ "type": "string" }, { "type": "number" }]
+                },
+                "termSource": {
+                  "type": "string",
+                  "description": "The abbreviated ontology name. It should correspond to one of the sources as specified in the ontologySourceReference section of the Investigation."
+                },
+                "termAccession": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "protocols": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA protocol schema",
+              "name": "ISA protocol schema",
+              "description": "JSON-schema representing a protocol in the ISA model",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                },
+                "name": {
+                  "type": "string"
+                },
+                "protocolType": {
+                  "$ref": "ontology_annotation_schema.json#"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "uri": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "version": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "$schema": "http://json-schema.org/draft-04/schema",
+                    "title": "ISA protocol parameter schema",
+                    "description": "JSON-schema representing a parameter for a protocol (category declared in the investigation file) in the ISA model",
+                    "type": "object",
+                    "properties": {
+                      "@id": { "type": "string", "format": "uri" },
+                      "parameterName": {
+                        "$ref": "ontology_annotation_schema.json#"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "components": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "componentName": {
+                        "type": "string"
+                      },
+                      "componentType": {
+                        "$ref": "ontology_annotation_schema.json#"
+                      }
+                    }
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "materials": {
+            "type": "object",
+            "properties": {
+              "sources": {
+                "type": "array",
+                "items": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA source schema",
+                  "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "name": { "type": "string" },
+                    "characteristics": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA material attribute schema",
+                        "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "category": {
+                            "$ref": "material_attribute_schema.json#"
+                          },
+                          "value": {
+                            "anyOf": [
+                              { "$ref": "ontology_annotation_schema.json#" },
+                              { "type": "string" },
+                              { "type": "number" }
+                            ]
+                          },
+                          "unit": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "samples": {
+                "type": "array",
+                "items": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA sample schema",
+                  "description": "JSON-schema representing a sample in the ISA model. A sample represents a major output resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.",
+                  "type": "object",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "name": { "type": "string" },
+                    "characteristics": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA material attribute schema",
+                        "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "category": {
+                            "$ref": "material_attribute_schema.json#"
+                          },
+                          "value": {
+                            "anyOf": [
+                              { "$ref": "ontology_annotation_schema.json#" },
+                              { "type": "string" },
+                              { "type": "number" }
+                            ]
+                          },
+                          "unit": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "factorValues": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA factor value schema",
+                        "description": "JSON-schema representing a factor value in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "category": {
+                            "$schema": "http://json-schema.org/draft-04/schema",
+                            "title": "ISA factor schema",
+                            "name": "ISA factor schema",
+                            "description": "JSON-schema representing a factor value in the ISA model",
+                            "type": "object",
+                            "properties": {
+                              "@id": { "type": "string", "format": "uri" },
+                              "factorName": {
+                                "type": "string"
+                              },
+                              "factorType": {
+                                "$ref": "ontology_annotation_schema.json#"
+                              },
+                              "comments": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "comment_schema.json#"
+                                }
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "value": {
+                            "anyOf": [
+                              { "$ref": "ontology_annotation_schema.json#" },
+                              { "type": "string" },
+                              { "type": "number" }
+                            ]
+                          },
+                          "unit": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "derivesFrom": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA source schema",
+                        "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "material_attribute_value_schema.json#"
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "otherMaterials": {
+                "type": "array",
+                "items": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA material node schema",
+                  "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                  "type": "object",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "name": { "type": "string" },
+                    "type": {
+                      "type": "string",
+                      "enum": ["Extract Name", "Labeled Extract Name"]
+                    },
+                    "characteristics": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "material_attribute_value_schema.json#"
+                      }
+                    },
+                    "derivesFrom": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA material node schema",
+                        "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "type": {
+                            "type": "string",
+                            "enum": ["Extract Name", "Labeled Extract Name"]
+                          },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "material_attribute_value_schema.json#"
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "material_schema.json#"
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "processSequence": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA process or protocol application schema, corresponds to 'Protocol REF' columns in the study and assay files",
+              "description": "JSON-schema representing a protocol application in the ISA model",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "name": {
+                  "type": "string"
+                },
+                "executesProtocol": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA protocol schema",
+                  "name": "ISA protocol schema",
+                  "description": "JSON-schema representing a protocol in the ISA model",
+                  "type": "object",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "comment_schema.json#"
+                      }
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "protocolType": {
+                      "$ref": "ontology_annotation_schema.json#"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "uri": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "parameters": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA protocol parameter schema",
+                        "description": "JSON-schema representing a parameter for a protocol (category declared in the investigation file) in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "parameterName": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "components": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "componentName": {
+                            "type": "string"
+                          },
+                          "componentType": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "parameterValues": {
+                  "type": "array",
+                  "items": {
+                    "$schema": "http://json-schema.org/draft-04/schema",
+                    "title": "ISA process parameter value schema",
+                    "description": "JSON-schema representing a Parameter Value (associated with a Protocol REF) in the ISA model",
+                    "type": "object",
+                    "properties": {
+                      "category": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA protocol parameter schema",
+                        "description": "JSON-schema representing a parameter for a protocol (category declared in the investigation file) in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "parameterName": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "value": {
+                        "anyOf": [
+                          { "$ref": "ontology_annotation_schema.json#" },
+                          { "type": "string" },
+                          { "type": "number" }
+                        ]
+                      },
+                      "unit": {
+                        "$ref": "ontology_annotation_schema.json#"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "performer": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "previousProcess": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA process or protocol application schema, corresponds to 'Protocol REF' columns in the study and assay files",
+                  "description": "JSON-schema representing a protocol application in the ISA model",
+                  "type": "object",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "name": {
+                      "type": "string"
+                    },
+                    "executesProtocol": {
+                      "$ref": "protocol_schema.json#"
+                    },
+                    "parameterValues": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA process parameter value schema",
+                        "description": "JSON-schema representing a Parameter Value (associated with a Protocol REF) in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "$ref": "protocol_parameter_schema.json#"
+                          },
+                          "value": {
+                            "anyOf": [
+                              { "$ref": "ontology_annotation_schema.json#" },
+                              { "type": "string" },
+                              { "type": "number" }
+                            ]
+                          },
+                          "unit": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "performer": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "previousProcess": {
+                      "$ref": "process_schema.json#"
+                    },
+                    "nextProcess": {
+                      "$ref": "process_schema.json#"
+                    },
+                    "inputs": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "source_schema.json#"
+                          },
+                          {
+                            "$ref": "sample_schema.json#"
+                          },
+                          {
+                            "$ref": "data_schema.json#"
+                          },
+                          {
+                            "$ref": "material_schema.json#"
+                          }
+                        ]
+                      }
+                    },
+                    "outputs": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "sample_schema.json#"
+                          },
+                          {
+                            "$ref": "data_schema.json#"
+                          },
+                          {
+                            "$ref": "material_schema.json#"
+                          }
+                        ]
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "comment_schema.json#"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "nextProcess": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA process or protocol application schema, corresponds to 'Protocol REF' columns in the study and assay files",
+                  "description": "JSON-schema representing a protocol application in the ISA model",
+                  "type": "object",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "name": {
+                      "type": "string"
+                    },
+                    "executesProtocol": {
+                      "$ref": "protocol_schema.json#"
+                    },
+                    "parameterValues": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA process parameter value schema",
+                        "description": "JSON-schema representing a Parameter Value (associated with a Protocol REF) in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "$ref": "protocol_parameter_schema.json#"
+                          },
+                          "value": {
+                            "anyOf": [
+                              { "$ref": "ontology_annotation_schema.json#" },
+                              { "type": "string" },
+                              { "type": "number" }
+                            ]
+                          },
+                          "unit": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "performer": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "previousProcess": {
+                      "$ref": "process_schema.json#"
+                    },
+                    "nextProcess": {
+                      "$ref": "process_schema.json#"
+                    },
+                    "inputs": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "source_schema.json#"
+                          },
+                          {
+                            "$ref": "sample_schema.json#"
+                          },
+                          {
+                            "$ref": "data_schema.json#"
+                          },
+                          {
+                            "$ref": "material_schema.json#"
+                          }
+                        ]
+                      }
+                    },
+                    "outputs": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "sample_schema.json#"
+                          },
+                          {
+                            "$ref": "data_schema.json#"
+                          },
+                          {
+                            "$ref": "material_schema.json#"
+                          }
+                        ]
+                      }
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "comment_schema.json#"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "inputs": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA source schema",
+                        "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material attribute schema",
+                              "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$ref": "material_attribute_schema.json#"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA sample schema",
+                        "description": "JSON-schema representing a sample in the ISA model. A sample represents a major output resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material attribute schema",
+                              "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$ref": "material_attribute_schema.json#"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "factorValues": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA factor value schema",
+                              "description": "JSON-schema representing a factor value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$schema": "http://json-schema.org/draft-04/schema",
+                                  "title": "ISA factor schema",
+                                  "name": "ISA factor schema",
+                                  "description": "JSON-schema representing a factor value in the ISA model",
+                                  "type": "object",
+                                  "properties": {
+                                    "@id": {
+                                      "type": "string",
+                                      "format": "uri"
+                                    },
+                                    "factorName": {
+                                      "type": "string"
+                                    },
+                                    "factorType": {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    "comments": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "comment_schema.json#"
+                                      }
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA source schema",
+                              "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "$ref": "data_schema.json#"
+                      },
+                      {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA material node schema",
+                        "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "type": {
+                            "type": "string",
+                            "enum": ["Extract Name", "Labeled Extract Name"]
+                          },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "material_attribute_value_schema.json#"
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material node schema",
+                              "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "Extract Name",
+                                    "Labeled Extract Name"
+                                  ]
+                                },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_schema.json#"
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "outputs": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA sample schema",
+                        "description": "JSON-schema representing a sample in the ISA model. A sample represents a major output resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material attribute schema",
+                              "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$ref": "material_attribute_schema.json#"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "factorValues": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA factor value schema",
+                              "description": "JSON-schema representing a factor value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$schema": "http://json-schema.org/draft-04/schema",
+                                  "title": "ISA factor schema",
+                                  "name": "ISA factor schema",
+                                  "description": "JSON-schema representing a factor value in the ISA model",
+                                  "type": "object",
+                                  "properties": {
+                                    "@id": {
+                                      "type": "string",
+                                      "format": "uri"
+                                    },
+                                    "factorName": {
+                                      "type": "string"
+                                    },
+                                    "factorType": {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    "comments": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "comment_schema.json#"
+                                      }
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA source schema",
+                              "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "$ref": "data_schema.json#"
+                      },
+                      {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA material node schema",
+                        "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "type": {
+                            "type": "string",
+                            "enum": ["Extract Name", "Labeled Extract Name"]
+                          },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "material_attribute_value_schema.json#"
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material node schema",
+                              "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "Extract Name",
+                                    "Labeled Extract Name"
+                                  ]
+                                },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_schema.json#"
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "assays": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "title": "Assay JSON Schema",
+              "name": "Assay JSON Schema",
+              "description": "JSON Schema describing an Assay",
+              "@context": {
+                "@base": "http://purl.org/isaterms/",
+                "xsd": "http://www.w3.org/2001/XMLSchema#"
+              },
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$schema": "http://json-schema.org/draft-04/schema",
+                    "title": "ISA comment schema - it corresponds to ISA Comment[] construct",
+                    "description": "JSON-schema representing a comment in the ISA model",
+                    "type": "object",
+                    "properties": {
+                      "@id": { "type": "string", "format": "uri" },
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "filename": { "type": "string" },
+                "measurementType": {
+                  "$schema": "http://json-schema.org/draft-04/schema",
+                  "title": "ISA ontology reference schema",
+                  "name": "ISA ontology reference schema",
+                  "description": "JSON-schema representing an ontology reference or annotation in the ISA model (for fields that are required to be ontology annotations)",
+                  "type": "object",
+                  "properties": {
+                    "@id": { "type": "string", "format": "uri" },
+                    "annotationValue": {
+                      "anyOf": [{ "type": "string" }, { "type": "number" }]
+                    },
+                    "termSource": {
+                      "type": "string",
+                      "description": "The abbreviated ontology name. It should correspond to one of the sources as specified in the ontologySourceReference section of the Investigation."
+                    },
+                    "termAccession": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "comment_schema.json#"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "technologyType": {
+                  "type": "object",
+                  "properties": {
+                    "ontologyAnnotation": {
+                      "$schema": "http://json-schema.org/draft-04/schema",
+                      "title": "ISA ontology reference schema",
+                      "name": "ISA ontology reference schema",
+                      "description": "JSON-schema representing an ontology reference or annotation in the ISA model (for fields that are required to be ontology annotations)",
+                      "type": "object",
+                      "properties": {
+                        "@id": { "type": "string", "format": "uri" },
+                        "annotationValue": {
+                          "anyOf": [{ "type": "string" }, { "type": "number" }]
+                        },
+                        "termSource": {
+                          "type": "string",
+                          "description": "The abbreviated ontology name. It should correspond to one of the sources as specified in the ontologySourceReference section of the Investigation."
+                        },
+                        "termAccession": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "comments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "comment_schema.json#"
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "technologyPlatform": { "type": "string" },
+                "dataFiles": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "data_schema.json#"
+                  }
+                },
+                "materials": {
+                  "type": "object",
+                  "properties": {
+                    "samples": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA sample schema",
+                        "description": "JSON-schema representing a sample in the ISA model. A sample represents a major output resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material attribute schema",
+                              "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$ref": "material_attribute_schema.json#"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "factorValues": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA factor value schema",
+                              "description": "JSON-schema representing a factor value in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "category": {
+                                  "$schema": "http://json-schema.org/draft-04/schema",
+                                  "title": "ISA factor schema",
+                                  "name": "ISA factor schema",
+                                  "description": "JSON-schema representing a factor value in the ISA model",
+                                  "type": "object",
+                                  "properties": {
+                                    "@id": {
+                                      "type": "string",
+                                      "format": "uri"
+                                    },
+                                    "factorName": {
+                                      "type": "string"
+                                    },
+                                    "factorType": {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    "comments": {
+                                      "type": "array",
+                                      "items": {
+                                        "$ref": "comment_schema.json#"
+                                      }
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA source schema",
+                              "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "otherMaterials": {
+                      "type": "array",
+                      "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA material node schema",
+                        "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": { "type": "string" },
+                          "type": {
+                            "type": "string",
+                            "enum": ["Extract Name", "Labeled Extract Name"]
+                          },
+                          "characteristics": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "material_attribute_value_schema.json#"
+                            }
+                          },
+                          "derivesFrom": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material node schema",
+                              "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "Extract Name",
+                                    "Labeled Extract Name"
+                                  ]
+                                },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_schema.json#"
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  }
+                },
+                "characteristicCategories": {
+                  "description": "List of all the characteristics categories (or material attributes) defined in the study, used to avoid duplication of their declaration when each material_attribute_value is created. ",
+                  "type": "array",
+                  "items": {
+                    "$ref": "material_attribute_schema.json#"
+                  }
+                },
+                "unitCategories": {
+                  "description": "List of all the unitsdefined in the study, used to avoid duplication of their declaration when each value is created. ",
+                  "type": "array",
+                  "items": {
+                    "$schema": "http://json-schema.org/draft-04/schema",
+                    "title": "ISA ontology reference schema",
+                    "name": "ISA ontology reference schema",
+                    "description": "JSON-schema representing an ontology reference or annotation in the ISA model (for fields that are required to be ontology annotations)",
+                    "type": "object",
+                    "properties": {
+                      "@id": { "type": "string", "format": "uri" },
+                      "annotationValue": {
+                        "anyOf": [{ "type": "string" }, { "type": "number" }]
+                      },
+                      "termSource": {
+                        "type": "string",
+                        "description": "The abbreviated ontology name. It should correspond to one of the sources as specified in the ontologySourceReference section of the Investigation."
+                      },
+                      "termAccession": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "comment_schema.json#"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "processSequence": {
+                  "type": "array",
+                  "items": {
+                    "$schema": "http://json-schema.org/draft-04/schema",
+                    "title": "ISA process or protocol application schema, corresponds to 'Protocol REF' columns in the study and assay files",
+                    "description": "JSON-schema representing a protocol application in the ISA model",
+                    "type": "object",
+                    "properties": {
+                      "@id": { "type": "string", "format": "uri" },
+                      "name": {
+                        "type": "string"
+                      },
+                      "executesProtocol": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA protocol schema",
+                        "name": "ISA protocol schema",
+                        "description": "JSON-schema representing a protocol in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "comments": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "comment_schema.json#"
+                            }
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "protocolType": {
+                            "$ref": "ontology_annotation_schema.json#"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "uri": {
+                            "type": "string",
+                            "format": "uri"
+                          },
+                          "version": {
+                            "type": "string"
+                          },
+                          "parameters": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA protocol parameter schema",
+                              "description": "JSON-schema representing a parameter for a protocol (category declared in the investigation file) in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "parameterName": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "components": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "componentName": {
+                                  "type": "string"
+                                },
+                                "componentType": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "parameterValues": {
+                        "type": "array",
+                        "items": {
+                          "$schema": "http://json-schema.org/draft-04/schema",
+                          "title": "ISA process parameter value schema",
+                          "description": "JSON-schema representing a Parameter Value (associated with a Protocol REF) in the ISA model",
+                          "type": "object",
+                          "properties": {
+                            "category": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA protocol parameter schema",
+                              "description": "JSON-schema representing a parameter for a protocol (category declared in the investigation file) in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "parameterName": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            "value": {
+                              "anyOf": [
+                                { "$ref": "ontology_annotation_schema.json#" },
+                                { "type": "string" },
+                                { "type": "number" }
+                              ]
+                            },
+                            "unit": {
+                              "$ref": "ontology_annotation_schema.json#"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "performer": {
+                        "type": "string"
+                      },
+                      "date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "previousProcess": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA process or protocol application schema, corresponds to 'Protocol REF' columns in the study and assay files",
+                        "description": "JSON-schema representing a protocol application in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": {
+                            "type": "string"
+                          },
+                          "executesProtocol": {
+                            "$ref": "protocol_schema.json#"
+                          },
+                          "parameterValues": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA process parameter value schema",
+                              "description": "JSON-schema representing a Parameter Value (associated with a Protocol REF) in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "category": {
+                                  "$ref": "protocol_parameter_schema.json#"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "performer": {
+                            "type": "string"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "previousProcess": {
+                            "$ref": "process_schema.json#"
+                          },
+                          "nextProcess": {
+                            "$ref": "process_schema.json#"
+                          },
+                          "inputs": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "$ref": "source_schema.json#"
+                                },
+                                {
+                                  "$ref": "sample_schema.json#"
+                                },
+                                {
+                                  "$ref": "data_schema.json#"
+                                },
+                                {
+                                  "$ref": "material_schema.json#"
+                                }
+                              ]
+                            }
+                          },
+                          "outputs": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "$ref": "sample_schema.json#"
+                                },
+                                {
+                                  "$ref": "data_schema.json#"
+                                },
+                                {
+                                  "$ref": "material_schema.json#"
+                                }
+                              ]
+                            }
+                          },
+                          "comments": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "comment_schema.json#"
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "nextProcess": {
+                        "$schema": "http://json-schema.org/draft-04/schema",
+                        "title": "ISA process or protocol application schema, corresponds to 'Protocol REF' columns in the study and assay files",
+                        "description": "JSON-schema representing a protocol application in the ISA model",
+                        "type": "object",
+                        "properties": {
+                          "@id": { "type": "string", "format": "uri" },
+                          "name": {
+                            "type": "string"
+                          },
+                          "executesProtocol": {
+                            "$ref": "protocol_schema.json#"
+                          },
+                          "parameterValues": {
+                            "type": "array",
+                            "items": {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA process parameter value schema",
+                              "description": "JSON-schema representing a Parameter Value (associated with a Protocol REF) in the ISA model",
+                              "type": "object",
+                              "properties": {
+                                "category": {
+                                  "$ref": "protocol_parameter_schema.json#"
+                                },
+                                "value": {
+                                  "anyOf": [
+                                    {
+                                      "$ref": "ontology_annotation_schema.json#"
+                                    },
+                                    { "type": "string" },
+                                    { "type": "number" }
+                                  ]
+                                },
+                                "unit": {
+                                  "$ref": "ontology_annotation_schema.json#"
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "performer": {
+                            "type": "string"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "previousProcess": {
+                            "$ref": "process_schema.json#"
+                          },
+                          "nextProcess": {
+                            "$ref": "process_schema.json#"
+                          },
+                          "inputs": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "$ref": "source_schema.json#"
+                                },
+                                {
+                                  "$ref": "sample_schema.json#"
+                                },
+                                {
+                                  "$ref": "data_schema.json#"
+                                },
+                                {
+                                  "$ref": "material_schema.json#"
+                                }
+                              ]
+                            }
+                          },
+                          "outputs": {
+                            "type": "array",
+                            "items": {
+                              "anyOf": [
+                                {
+                                  "$ref": "sample_schema.json#"
+                                },
+                                {
+                                  "$ref": "data_schema.json#"
+                                },
+                                {
+                                  "$ref": "material_schema.json#"
+                                }
+                              ]
+                            }
+                          },
+                          "comments": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "comment_schema.json#"
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "inputs": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA source schema",
+                              "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA material attribute schema",
+                                    "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "category": {
+                                        "$ref": "material_attribute_schema.json#"
+                                      },
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          { "type": "string" },
+                                          { "type": "number" }
+                                        ]
+                                      },
+                                      "unit": {
+                                        "$ref": "ontology_annotation_schema.json#"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA sample schema",
+                              "description": "JSON-schema representing a sample in the ISA model. A sample represents a major output resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA material attribute schema",
+                                    "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "category": {
+                                        "$ref": "material_attribute_schema.json#"
+                                      },
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          { "type": "string" },
+                                          { "type": "number" }
+                                        ]
+                                      },
+                                      "unit": {
+                                        "$ref": "ontology_annotation_schema.json#"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "factorValues": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA factor value schema",
+                                    "description": "JSON-schema representing a factor value in the ISA model",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "category": {
+                                        "$schema": "http://json-schema.org/draft-04/schema",
+                                        "title": "ISA factor schema",
+                                        "name": "ISA factor schema",
+                                        "description": "JSON-schema representing a factor value in the ISA model",
+                                        "type": "object",
+                                        "properties": {
+                                          "@id": {
+                                            "type": "string",
+                                            "format": "uri"
+                                          },
+                                          "factorName": {
+                                            "type": "string"
+                                          },
+                                          "factorType": {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          "comments": {
+                                            "type": "array",
+                                            "items": {
+                                              "$ref": "comment_schema.json#"
+                                            }
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          { "type": "string" },
+                                          { "type": "number" }
+                                        ]
+                                      },
+                                      "unit": {
+                                        "$ref": "ontology_annotation_schema.json#"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA source schema",
+                                    "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "name": { "type": "string" },
+                                      "characteristics": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "material_attribute_value_schema.json#"
+                                        }
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            {
+                              "$ref": "data_schema.json#"
+                            },
+                            {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material node schema",
+                              "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "Extract Name",
+                                    "Labeled Extract Name"
+                                  ]
+                                },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA material node schema",
+                                    "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "name": { "type": "string" },
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "Extract Name",
+                                          "Labeled Extract Name"
+                                        ]
+                                      },
+                                      "characteristics": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "material_attribute_value_schema.json#"
+                                        }
+                                      },
+                                      "derivesFrom": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "material_schema.json#"
+                                        }
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "outputs": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA sample schema",
+                              "description": "JSON-schema representing a sample in the ISA model. A sample represents a major output resulting from a protocol application other than the special case outputs of Extract or a Labeled Extract.",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA material attribute schema",
+                                    "description": "JSON-schema representing a material attribute (or characteristic) value in the ISA model",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "category": {
+                                        "$ref": "material_attribute_schema.json#"
+                                      },
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          { "type": "string" },
+                                          { "type": "number" }
+                                        ]
+                                      },
+                                      "unit": {
+                                        "$ref": "ontology_annotation_schema.json#"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "factorValues": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA factor value schema",
+                                    "description": "JSON-schema representing a factor value in the ISA model",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "category": {
+                                        "$schema": "http://json-schema.org/draft-04/schema",
+                                        "title": "ISA factor schema",
+                                        "name": "ISA factor schema",
+                                        "description": "JSON-schema representing a factor value in the ISA model",
+                                        "type": "object",
+                                        "properties": {
+                                          "@id": {
+                                            "type": "string",
+                                            "format": "uri"
+                                          },
+                                          "factorName": {
+                                            "type": "string"
+                                          },
+                                          "factorType": {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          "comments": {
+                                            "type": "array",
+                                            "items": {
+                                              "$ref": "comment_schema.json#"
+                                            }
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "value": {
+                                        "anyOf": [
+                                          {
+                                            "$ref": "ontology_annotation_schema.json#"
+                                          },
+                                          { "type": "string" },
+                                          { "type": "number" }
+                                        ]
+                                      },
+                                      "unit": {
+                                        "$ref": "ontology_annotation_schema.json#"
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA source schema",
+                                    "description": "JSON-schema representing a source in the ISA model. Sources are considered as the starting biological material used in a study.",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "name": { "type": "string" },
+                                      "characteristics": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "material_attribute_value_schema.json#"
+                                        }
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            {
+                              "$ref": "data_schema.json#"
+                            },
+                            {
+                              "$schema": "http://json-schema.org/draft-04/schema",
+                              "title": "ISA material node schema",
+                              "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                              "type": "object",
+                              "properties": {
+                                "@id": { "type": "string", "format": "uri" },
+                                "name": { "type": "string" },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "Extract Name",
+                                    "Labeled Extract Name"
+                                  ]
+                                },
+                                "characteristics": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "material_attribute_value_schema.json#"
+                                  }
+                                },
+                                "derivesFrom": {
+                                  "type": "array",
+                                  "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema",
+                                    "title": "ISA material node schema",
+                                    "description": "JSON-schema representing a material node in the ISA model, which is not a source or a sample (as they have specific schemas) - this will correspond to 'Extract Name', 'Labeled Extract Name'",
+                                    "type": "object",
+                                    "properties": {
+                                      "@id": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "name": { "type": "string" },
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "Extract Name",
+                                          "Labeled Extract Name"
+                                        ]
+                                      },
+                                      "characteristics": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "material_attribute_value_schema.json#"
+                                        }
+                                      },
+                                      "derivesFrom": {
+                                        "type": "array",
+                                        "items": {
+                                          "$ref": "material_schema.json#"
+                                        }
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "comment_schema.json#"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "factors": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA factor schema",
+              "name": "ISA factor schema",
+              "description": "JSON-schema representing a factor value in the ISA model",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "factorName": {
+                  "type": "string"
+                },
+                "factorType": {
+                  "$ref": "ontology_annotation_schema.json#"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "characteristicCategories": {
+            "description": "List of all the characteristics categories (or material attributes) defined in the study, used to avoid duplication of their declaration when each material_attribute_value is created. ",
+            "type": "array",
+            "items": {
+              "$ref": "material_attribute_schema.json#"
+            }
+          },
+          "unitCategories": {
+            "description": "List of all the unitsdefined in the study, used to avoid duplication of their declaration when each value is created. ",
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA ontology reference schema",
+              "name": "ISA ontology reference schema",
+              "description": "JSON-schema representing an ontology reference or annotation in the ISA model (for fields that are required to be ontology annotations)",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "annotationValue": {
+                  "anyOf": [{ "type": "string" }, { "type": "number" }]
+                },
+                "termSource": {
+                  "type": "string",
+                  "description": "The abbreviated ontology name. It should correspond to one of the sources as specified in the ontologySourceReference section of the Investigation."
+                },
+                "termAccession": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "comments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "comment_schema.json#"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$schema": "http://json-schema.org/draft-04/schema",
+              "title": "ISA comment schema - it corresponds to ISA Comment[] construct",
+              "description": "JSON-schema representing a comment in the ISA model",
+              "type": "object",
+              "properties": {
+                "@id": { "type": "string", "format": "uri" },
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "title": "ISA comment schema - it corresponds to ISA Comment[] construct",
+        "description": "JSON-schema representing a comment in the ISA model",
+        "type": "object",
+        "properties": {
+          "@id": { "type": "string", "format": "uri" },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,37 @@
+table, th, tr, td {
+    border:1px solid ;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    border-collapse: collapse;
+    font-size:14px;
+    font-weight: 200;
+    font-family: Arial, Helvetica, sans-serif;
+    border-color:aqua;
+}
+
+td {
+    padding: 5px;
+    color: blueviolet;
+    word-wrap: break-word;    
+}
+
+th {
+    height:20px;
+    color: blueviolet;
+    font-weight: 200;
+}
+
+img {
+
+    max-width:80%;
+    height:auto;
+}
+
+.wrap {
+    width: 120px;
+    word-wrap: break-word;
+}
+
+.bold {
+    font-weight:bold;
+}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Select MS1 File for Import{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<!---uploadms1_data -->
+<!---uploadms1_file -->
+<form method="post" enctype="multipart/form-data" action=" {{ url_for('app_bp.uploadms1', from_client='external') }}">
+    <label>Select file to upload</label>
+    <input type="file" name="file">
+
+    <button type="submit" value="Upload MS1">Upload</button>
+</form>
+
+{% endblock %}

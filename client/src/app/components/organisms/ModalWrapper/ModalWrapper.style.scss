@@ -1,0 +1,57 @@
+.modal {
+  zoom: 90%;
+  &-content {
+    min-width: 1048px;
+  }
+  &-header {
+    border: none;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 27px 34px;
+
+    .modal-title {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 33px;
+      /* identical to box height */
+
+      letter-spacing: 0.2px;
+
+      color: #252f40;
+    }
+
+    .btn-close {
+      padding: 0;
+      margin: 0;
+      margin-right: 20px;
+    }
+  }
+  &-body {
+    border: 1px solid rgba(135, 146, 166, 0.38);
+    border-radius: 4px;
+    margin: 40px 60px;
+    padding: 32px 35px;
+  }
+  &-footer {
+    border: none;
+    background: rgba(135, 146, 166, 0.09);
+    justify-content: space-between;
+    padding: 30px 46px;
+  }
+
+  .modal-close-button {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 27px;
+    /* identical to box height */
+
+    letter-spacing: 0.2px;
+
+    color: rgba(37, 47, 64, 0.48);
+  }
+}

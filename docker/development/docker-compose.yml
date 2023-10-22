@@ -1,0 +1,93 @@
+version: '2.1'
+services:
+  postgres:
+    # container_name: postgres
+    # hostname: postgres
+    # restart: always
+    image: postgres:15.1
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ../../database/biodevs.sql:/docker-entrypoint-initdb.d/biodevs.sql
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  
+  pgadmin:
+    # container_name: pgadmin
+    # hostname: pgadmin
+    image: dpage/pgadmin4
+    # restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: ${PGADMIN_CONFIG_SERVER_MODE}
+      SCRIPT_NAME: ${SCRIPT_NAME}
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+
+  app:
+    # restart: always
+    # https://stackoverflow.com/questions/62807717/how-can-i-solve-postgresql-scram-authentication-problem
+    platform: linux/amd64
+    image: python:3.7
+    working_dir: /Bio-Dev
+    command: bash -c 'pip install -r requirements.txt && exec python3 wsgi.py'
+    volumes: 
+      - ../../api:/Bio-Dev
+      # Persist the requirements.txt packages
+      - pip37:/usr/local/lib/python3.7/site-packages
+      - logs:/Bio-Dev/metabolomics/logs
+      - plots:/Bio-Dev/metabolomics/static/plots
+      - uploads:/Bio-Dev/metabolomics/uploads
+    depends_on:
+      - postgres
+
+  frontend:
+    # restart: always
+    image: node:18
+    working_dir: /app
+    command: bash -c 'npm install && npm start'
+    environment:
+      REACT_APP_BASE_URL: ${REACT_APP_BASE_URL}
+      # PATH: '/app/node_modules/.bin:$PATH'
+    ports:
+      - '3000:3000'
+    volumes:
+      - ../../client:/app
+      - node_modules:/app/node_modules
+
+  nginx:
+    # restart: unless-stopped
+    # container_name: nginx
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - postgres
+      - pgadmin
+      - app
+      - frontend
+
+
+
+volumes:
+  # To Persist the PostGre Database
+  postgres-data:
+  # To save Time Installing Node Modules
+  node_modules:
+  # To Persist the Created Plot Diagrams
+  plots:
+  # To Persist the logs
+  logs:
+  # To Persist the PostGre Database Connections
+  pgadmin:
+  # To save Time Installing the pip requirements
+  pip37:
+  # The Place where the backend uploads files
+  uploads:

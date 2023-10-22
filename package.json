@@ -1,0 +1,22 @@
+{
+  "name": "bio-dev",
+  "version": "1.0.0",
+  "description": "*Bio Devs*",
+  "scripts": {
+    "dev": "npm run prod:stop && cd docker/development && docker compose up --build",
+    "prod": "npm run dev:stop && cd docker/production && docker compose up --build",
+    "dev:stop": "echo 'Stopping Dev Containers' && cd docker/development && docker compose stop && echo 'Stopped All Dev Containers'",
+    "prod:stop": "echo 'Stopping Prod Containers' && cd docker/production && docker compose stop && echo 'Stopped All Prod Containers'",
+    "docker:stop": "echo 'Stopping all envs' && npm run dev:stop && npm run prod:stop && echo 'Stopped all Containers'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lawtrea/Bio-Dev.git"
+  },
+  "author": "Lawrence Egyir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lawtrea/Bio-Dev/issues"
+  },
+  "homepage": "https://github.com/lawtrea/Bio-Dev#readme"
+}

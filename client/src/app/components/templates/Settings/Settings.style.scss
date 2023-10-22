@@ -1,0 +1,22 @@
+.settings-page {
+  zoom: 90%;
+  .settings-page__inner {
+    padding: 2em;
+  }
+
+  .nav.nav-tabs[role='tablist'] {
+    margin-bottom: 2em;
+    .nav-item {
+      button {
+        // padding: 1em 2em;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 600;
+        // font-size: 18px;
+        // line-height: 25px;
+        // letter-spacing: 0.2px;
+        color: #252f40;
+      }
+    }
+  }
+}

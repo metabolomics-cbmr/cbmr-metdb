@@ -1,0 +1,372 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Imported MS1 Data {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <table id="scanmst">
+        <tr>
+            <th>	Id	</th>
+            <th>	File Name	</th>
+            <th>    Imported On</th>
+        </tr>
+        <tr>
+            <td> {{ mst["id"] }}  </td>
+            <td> {{ mst["file_name"] }}  </td>
+            <td> {{ mst["import_date"] }}  </td>
+        </tr>
+    </table>
+</div>
+
+<h3>Positive polarity compounds -> [M+H]+ ion </h3>
+<div>
+<table id="scandet">
+    <tr>
+        <th>	Compound Name	</th>
+        <th>	Polarity	</th>
+        <th>	Molecular Formula	</th>
+        <th>	Monoisotopic Molecular Mass	</th>
+        <th>	Ion	</th>
+        <th>	Library.rt.RF1	</th>
+        <th>	Library.rt.HILLIC1	</th>
+        <th>	Library.mz	</th>
+        <th>	Measured.mz	</th>
+        <th>	Peak.note	</th>
+        <th>	Mass.diff.ppm	</th>
+        <th>	Mass.diff	</th>
+        <th>	Spectra.confirmation	</th>
+        <th>	Comments	</th>
+        <th>	KEGG.ID.CSID	</th>
+        <th>	CAS	</th>
+        <th>	HMDB.YMDB.ID	</th>
+        <th>	METLIN.ID	</th>
+        <th>	PC.CID	</th>
+        <th>	PC.URL	</th>
+        <th>	PC.SID	</th>
+        <th>	ChEBI	</th>
+        <th>	SMILES	</th>
+        <th>	Class.chemical.taxonomy	</th>
+        <th>	Sub.class.chemical.taxonomy	</th>
+        <th>	Biospecimen.locations	</th>
+        <th>	Tissue.locations	</th>
+        <th>	Supplier.product.name	</th>
+        <th>	Supplier.cat.no	</th>
+    </tr>
+
+    {% for row in det %}
+    {% if  row["mass_spec_polarity"] == "POS" and row["ion"] == "[M+H]+" %}
+        <tr>
+            <td> {{ row["compound_name"] }}  </td>
+            <td> {{ row["mass_spec_polarity"] }}  </td>
+            <td> {{ row["molecular_formula"] }}  </td>
+            <td> {{ row["mono_molecule_mass"] }}  </td>
+            <td> {{ row["ion"] }}  </td>
+            {% if row["library_rt_rf1"] == None %}            
+
+            {% else %}
+            <td> {{ row["library_rt_rf1"] }}  </td>
+            {% endif %}
+
+            <td>
+                {% if row["library_rt_hillic1"] == None %}
+
+                {% else %}
+                     {{ row["library_rt_hillic1"] }}  
+                {% endif %}
+            </td>
+            <td> {{ row["library_mz"] }}  </td>
+            <td> {{ row["measured_mz"] }}  </td>
+            <td> {{ row["peak_note"] }}  </td>
+            <td> {{ row["mass_diff_ppm"] }}  </td>
+            <td> {{ row["mass_diff"] }}  </td>
+            <td> {{ row["spectra_confirmation"] }}  </td>
+            <td> {{ row["remarks"] }}  </td>
+            <td> {{ row["kegg_id_csid"] }}  </td>
+            <td> {{ row["cas"] }}  </td>
+            <td> {{ row["hmdb_ymdb_id"] }}  </td>
+            <td> {{ row["metlin_id"] }}  </td>
+            <td> {{ row["pubchem_cid"] }}  </td>
+            <td> {{ row["pubchem_url"] }}  </td>
+            <td> {{ row["pubchem_sid"] }}  </td>
+            <td> {{ row["chebi"] }}  </td>
+            <td> {{ row["smiles"] }}  </td>
+            <td> {{ row["class_chemical_taxonomy"] }}  </td>
+            <td> {{ row["subclass_chemical_taxonomy"] }}  </td>
+            <td> {{ row["biospecimen_locations"] }}  </td>
+            <td> {{ row["tissue_locations"] }}  </td>
+            <td> {{ row["supplier_product_name"] }}  </td>
+            <td> {{ row["supplier_cat_no"] }}  </td>
+        </tr>
+     {% endif %}
+    {% endfor %}
+  
+</table>
+</div>
+
+
+
+<h3>Positive polarity compounds -> ions other than [M+H]+ </h3>
+<div>
+<table id="scandet">
+    <tr>
+        <th>	Compound Name	</th>
+        <th>	Polarity	</th>
+        <th>	Molecular Formula	</th>
+        <th>	Monoisotopic Molecular Mass	</th>
+        <th>	Ion	</th>
+        <th>	Library.rt.RF1	</th>
+        <th>	Library.rt.HILLIC1	</th>
+        <th>	Library.mz	</th>
+        <th>	Measured.mz	</th>
+        <th>	Peak.note	</th>
+        <th>	Mass.diff.ppm	</th>
+        <th>	Mass.diff	</th>
+        <th>	Spectra.confirmation	</th>
+        <th>	Comments	</th>
+        <th>	KEGG.ID.CSID	</th>
+        <th>	CAS	</th>
+        <th>	HMDB.YMDB.ID	</th>
+        <th>	METLIN.ID	</th>
+        <th>	PC.CID	</th>
+        <th>	PC.URL	</th>
+        <th>	PC.SID	</th>
+        <th>	ChEBI	</th>
+        <th>	SMILES	</th>
+        <th>	Class.chemical.taxonomy	</th>
+        <th>	Sub.class.chemical.taxonomy	</th>
+        <th>	Biospecimen.locations	</th>
+        <th>	Tissue.locations	</th>
+        <th>	Supplier.product.name	</th>
+        <th>	Supplier.cat.no	</th>
+    </tr>
+
+    {% for row in det %}
+    {% if  row["mass_spec_polarity"] == "POS" and row["ion"] != "[M+H]+" %}
+        <tr>
+            <td> {{ row["compound_name"] }}  </td>
+            <td> {{ row["mass_spec_polarity"] }}  </td>
+            <td> {{ row["molecular_formula"] }}  </td>
+            <td> {{ row["mono_molecule_mass"] }}  </td>
+            <td> {{ row["ion"] }}  </td>
+            {% if row["library_rt_rf1"] == None %}            
+
+            {% else %}
+            <td> {{ row["library_rt_rf1"] }}  </td>
+            {% endif %}
+
+            <td>
+                {% if row["library_rt_hillic1"] == None %}
+
+                {% else %}
+                     {{ row["library_rt_hillic1"] }}  
+                {% endif %}
+            </td>
+            <td> {{ row["library_mz"] }}  </td>
+            <td> {{ row["measured_mz"] }}  </td>
+            <td> {{ row["peak_note"] }}  </td>
+            <td> {{ row["mass_diff_ppm"] }}  </td>
+            <td> {{ row["mass_diff"] }}  </td>
+            <td> {{ row["spectra_confirmation"] }}  </td>
+            <td> {{ row["remarks"] }}  </td>
+            <td> {{ row["kegg_id_csid"] }}  </td>
+            <td> {{ row["cas"] }}  </td>
+            <td> {{ row["hmdb_ymdb_id"] }}  </td>
+            <td> {{ row["metlin_id"] }}  </td>
+            <td> {{ row["pubchem_cid"] }}  </td>
+            <td> {{ row["pubchem_url"] }}  </td>
+            <td> {{ row["pubchem_sid"] }}  </td>
+            <td> {{ row["chebi"] }}  </td>
+            <td> {{ row["smiles"] }}  </td>
+            <td> {{ row["class_chemical_taxonomy"] }}  </td>
+            <td> {{ row["subclass_chemical_taxonomy"] }}  </td>
+            <td> {{ row["biospecimen_locations"] }}  </td>
+            <td> {{ row["tissue_locations"] }}  </td>
+            <td> {{ row["supplier_product_name"] }}  </td>
+            <td> {{ row["supplier_cat_no"] }}  </td>
+        </tr>
+     {% endif %}
+    {% endfor %}
+  
+</table>
+</div>
+
+
+<h3>Negative polarity compounds -> [M-H]- ion </h3>
+<div>
+<table id="scandet">
+    <tr>
+        <th>	Compound Name	</th>
+        <th>	Polarity	</th>
+        <th>	Molecular Formula	</th>
+        <th>	Monoisotopic Molecular Mass	</th>
+        <th>	Ion	</th>
+        <th>	Library.rt.RF1	</th>
+        <th>	Library.rt.HILLIC1	</th>
+        <th>	Library.mz	</th>
+        <th>	Measured.mz	</th>
+        <th>	Peak.note	</th>
+        <th>	Mass.diff.ppm	</th>
+        <th>	Mass.diff	</th>
+        <th>	Spectra.confirmation	</th>
+        <th>	Comments	</th>
+        <th>	KEGG.ID.CSID	</th>
+        <th>	CAS	</th>
+        <th>	HMDB.YMDB.ID	</th>
+        <th>	METLIN.ID	</th>
+        <th>	PC.CID	</th>
+        <th>	PC.URL	</th>
+        <th>	PC.SID	</th>
+        <th>	ChEBI	</th>
+        <th>	SMILES	</th>
+        <th>	Class.chemical.taxonomy	</th>
+        <th>	Sub.class.chemical.taxonomy	</th>
+        <th>	Biospecimen.locations	</th>
+        <th>	Tissue.locations	</th>
+        <th>	Supplier.product.name	</th>
+        <th>	Supplier.cat.no	</th>
+    </tr>
+
+    {% for row in det %}
+    {% if  row["mass_spec_polarity"] == "NEG" and row["ion"] == "[M-H]-" %}
+        <tr>
+            <td> {{ row["compound_name"] }}  </td>
+            <td> {{ row["mass_spec_polarity"] }}  </td>
+            <td> {{ row["molecular_formula"] }}  </td>
+            <td> {{ row["mono_molecule_mass"] }}  </td>
+            <td> {{ row["ion"] }}  </td>
+            {% if row["library_rt_rf1"] == None %}            
+
+            {% else %}
+            <td> {{ row["library_rt_rf1"] }}  </td>
+            {% endif %}
+
+            <td>
+                {% if row["library_rt_hillic1"] == None %}
+
+                {% else %}
+                     {{ row["library_rt_hillic1"] }}  
+                {% endif %}
+            </td>
+            <td> {{ row["library_mz"] }}  </td>
+            <td> {{ row["measured_mz"] }}  </td>
+            <td> {{ row["peak_note"] }}  </td>
+            <td> {{ row["mass_diff_ppm"] }}  </td>
+            <td> {{ row["mass_diff"] }}  </td>
+            <td> {{ row["spectra_confirmation"] }}  </td>
+            <td> {{ row["remarks"] }}  </td>
+            <td> {{ row["kegg_id_csid"] }}  </td>
+            <td> {{ row["cas"] }}  </td>
+            <td> {{ row["hmdb_ymdb_id"] }}  </td>
+            <td> {{ row["metlin_id"] }}  </td>
+            <td> {{ row["pubchem_cid"] }}  </td>
+            <td> {{ row["extra_pc_cid"] }}  </td>
+            <td> {{ row["pubchem_url"] }}  </td>
+            <td> {{ row["pubchem_sid"] }}  </td>
+            <td> {{ row["chebi"] }}  </td>
+            <td> {{ row["canonical_smiles"] }}  </td>
+            <td> {{ row["smiles"] }}  </td>
+            <td> {{ row["class_chemical_taxonomy"] }}  </td>
+            <td> {{ row["subclass_chemical_taxonomy"] }}  </td>
+            <td> {{ row["biospecimen_locations"] }}  </td>
+            <td> {{ row["tissue_locations"] }}  </td>
+            <td> {{ row["supplier_product_name"] }}  </td>
+            <td> {{ row["supplier_cat_no"] }}  </td>
+        </tr>
+     {% endif %}
+    {% endfor %}
+  
+</table>
+</div>
+
+<h3>Negative polarity compounds -> ions other than [M-H]- </h3>
+<div>
+<table id="scandet">
+    <tr>
+        <th>	Compound Name	</th>
+        <th>	Polarity	</th>
+        <th>	Molecular Formula	</th>
+        <th>	Monoisotopic Molecular Mass	</th>
+        <th>	Ion	</th>
+        <th>	Library.rt.RF1	</th>
+        <th>	Library.rt.HILLIC1	</th>
+        <th>	Library.mz	</th>
+        <th>	Measured.mz	</th>
+        <th>	Peak.note	</th>
+        <th>	Mass.diff.ppm	</th>
+        <th>	Mass.diff	</th>
+        <th>	Spectra.confirmation	</th>
+        <th>	Comments	</th>
+        <th>	KEGG.ID.CSID	</th>
+        <th>	CAS	</th>
+        <th>	HMDB.YMDB.ID	</th>
+        <th>	METLIN.ID	</th>
+        <th>	PC.CID	</th>
+        <th>	PC.URL	</th>
+        <th>	PC.SID	</th>
+        <th>	ChEBI	</th>
+        <th>	SMILES	</th>
+        <th>	Class.chemical.taxonomy	</th>
+        <th>	Sub.class.chemical.taxonomy	</th>
+        <th>	Biospecimen.locations	</th>
+        <th>	Tissue.locations	</th>
+        <th>	Supplier.product.name	</th>
+        <th>	Supplier.cat.no	</th>
+    </tr>
+
+    {% for row in det %}
+    {% if  row["mass_spec_polarity"] == "NEG" and row["ion"] != "[M-H]-" %}
+        <tr>
+            <td> {{ row["compound_name"] }}  </td>
+            <td> {{ row["mass_spec_polarity"] }}  </td>
+            <td> {{ row["molecular_formula"] }}  </td>
+            <td> {{ row["mono_molecule_mass"] }}  </td>
+            <td> {{ row["ion"] }}  </td>
+            {% if row["library_rt_rf1"] == None %}            
+
+            {% else %}
+            <td> {{ row["library_rt_rf1"] }}  </td>
+            {% endif %}
+
+            <td>
+                {% if row["library_rt_hillic1"] == None %}
+
+                {% else %}
+                     {{ row["library_rt_hillic1"] }}  
+                {% endif %}
+            </td>
+            <td> {{ row["library_mz"] }}  </td>
+            <td> {{ row["measured_mz"] }}  </td>
+            <td> {{ row["peak_note"] }}  </td>
+            <td> {{ row["mass_diff_ppm"] }}  </td>
+            <td> {{ row["mass_diff"] }}  </td>
+            <td> {{ row["spectra_confirmation"] }}  </td>
+            <td> {{ row["remarks"] }}  </td>
+            <td> {{ row["kegg_id_csid"] }}  </td>
+            <td> {{ row["cas"] }}  </td>
+            <td> {{ row["hmdb_ymdb_id"] }}  </td>
+            <td> {{ row["metlin_id"] }}  </td>
+            <td> {{ row["pubchem_cid"] }}  </td>
+            <td> {{ row["pubchem_url"] }}  </td>
+            <td> {{ row["pubchem_sid"] }}  </td>
+            <td> {{ row["chebi"] }}  </td>
+            <td> {{ row["smiles"] }}  </td>
+            <td> {{ row["class_chemical_taxonomy"] }}  </td>
+            <td> {{ row["subclass_chemical_taxonomy"] }}  </td>
+            <td> {{ row["biospecimen_locations"] }}  </td>
+            <td> {{ row["tissue_locations"] }}  </td>
+            <td> {{ row["supplier_product_name"] }}  </td>
+            <td> {{ row["supplier_cat_no"] }}  </td>
+        </tr>
+     {% endif %}
+    {% endfor %}
+  
+</table>
+</div>
+
+
+<div><a href="{{ url_for('app_bp.home') }}">Home</a></div>
+
+
+{% endblock %}

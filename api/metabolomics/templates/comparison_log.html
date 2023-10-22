@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Unknown compound comparison  log{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+<table id="scanmst">
+    <tr>
+    <th>Sr. No</th>
+    <th>Import Date</th>
+    <th>File Name</th>
+    <th></th>
+    </tr>
+    
+    {% for row in resultlog %}        
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+                {{ row['import_date'] }}
+            </td>
+            <td>
+                {{ row['file_name'][row['file_name'].rfind("/")+1:] }}
+            </td>
+            <td>
+                <a href= " {{ url_for('app_bp.display_results',id=row['id'], client='flask') }} ">Display Results</a>
+            </td>
+        </tr>
+    {% endfor %}
+   
+</table>
+</div>
+
+
+<div><a href="{{ url_for('app_bp.home') }} ">Home</a></div>
+
+{% endblock %}

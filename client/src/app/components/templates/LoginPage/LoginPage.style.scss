@@ -1,0 +1,51 @@
+.login-page {
+  background-image: url('../../../../assets/images/portal/login-bg.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  zoom: unset !important;
+
+  &__overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .login-form {
+    max-width: 420px;
+    width: 90%;
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 1px 4px 6px 2px #9a9797;
+    background-color: white;
+    &__title {
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid #901a20;
+      margin-bottom: 10px;
+      .login-form__logo {
+        height: 83px;
+        margin-bottom: -5px;
+      }
+
+      &__text {
+        margin-left: 20px;
+        font-size: 15px;
+        line-height: 1.5;
+        display: flex;
+        align-items: center;
+      }
+    }
+    &__footer {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    &__fields {
+      margin-top: 20px;
+    }
+  }
+}

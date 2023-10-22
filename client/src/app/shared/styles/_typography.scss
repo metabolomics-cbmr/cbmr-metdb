@@ -1,0 +1,49 @@
+// .font-1 {
+//   font-family: 'Open Sans';
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 14px;
+//   line-height: 19px;
+//   /* identical to box height */
+// }
+
+// /*
+// Colors
+// */
+// @mixin font-color($name, $code) {
+//   .color-#{$name} {
+//     color: $code;
+//   }
+// }
+
+// @include font-color(grey, #252f40);
+// @include font-color(primary, #901a1e);
+
+@mixin text-class(
+  $font-family,
+  $font-style,
+  $font-weight,
+  $font-size,
+  $line-height
+) {
+  font-family: $font-family;
+  font-style: $font-style;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+.dashboard-count {
+  @extend .text-primary;
+  @include text-class('Open Sans', normal, 700, 40px, 71px);
+}
+
+.table-text {
+  @include text-class('Open Sans', normal, 400, 14px, 19px);
+}
+
+.table-header-text {
+  @include text-class('Open Sans', normal, 600, 18px, 25px);
+  letter-spacing: 0.2px;
+  color: #252f40;
+}

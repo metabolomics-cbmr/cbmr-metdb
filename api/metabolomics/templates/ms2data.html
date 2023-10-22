@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Imported MS2 Data {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+<table id="scanmst">
+    <tr>
+    <th>Data Source</th>
+    <th>Scan Id</th>
+    <th>Pred or Expr</th>
+    <th>Mass Spec type</th>
+    <th>Spectrum Id</th>
+    <th>File format</th>
+    <th>File Name</th>
+    <th>Import date</th>
+
+    </tr>
+    
+        <tr>
+            <td>
+                {{ mst[1] }}
+            </td>
+            <td>
+               {{ mst[0] }}
+            </td>
+            <td>
+                {{ mst[2] }}
+             </td>
+             <td>
+                {{ mst[3] }}
+             </td>
+             <td>
+                {{ mst[4] }}
+             </td>
+             <td>
+                {{ mst[5] }}
+             </td>
+             <td>
+                {{ mst[6] }}
+             </td>
+             <td>
+                {{ mst[7] }}
+             </td>
+
+        </tr>
+    
+    
+   
+</table>
+</div>
+<div>
+<label><strong>Scan Details</strong></label>
+<table id="scandets">
+    <th>
+        Compound
+    </th>
+
+    <th>
+        Scan Number
+    </th>
+    <th>
+        MS Level
+    </th>
+    <th>
+        Retention Time 
+    </th>
+    <th>
+        Centroided
+    </th>
+    <th>
+        Polarity
+    </th>
+    <th>
+        Pre scan number
+    </th>
+    <th>
+        Precursor Mass
+    </th>
+    <th>
+        Precursor Intensity
+    </th>
+    <th>
+        Precursor Charge
+    </th>
+    <th>
+        Collision Energy
+    </th>
+    <th>
+        Orig. Peaks Count
+    </th>
+    <th>
+        Total Ion Current
+    </th>
+    <th>
+        Base Peak mz
+    </th>
+    <th>
+        Base Peak Intensity
+    </th>
+    <th>
+        Ionisation Energy
+    </th>
+    <th>
+        Low mz
+    </th>
+    <th>
+        High mz
+    </th>
+    <th>
+        Injection Time
+    </th>
+    <th>
+        Peak Index
+    </th>
+    <th>
+        Peak Id
+    </th>
+    <th>
+        Scan Index
+    </th>
+    <th>
+        Spectrum Id
+    </th>
+
+    <tr>
+        <td>
+            {{ det[24] }}
+        </td>
+
+        <td>
+            {{ det[1] }}
+        </td>
+        <td>
+            {{ det[2]  }}
+        </td>
+        <td>
+            {{ det[3]  }}
+        </td>
+        <td>
+            {{ det[4]  }}
+        </td>
+        <td>
+            {% if det[5] == "0" %}
+            NEG
+            {% else %}
+            POS
+            {% endif %}
+        </td>
+        <td>
+            {{ det[6]  }}
+        </td>
+        <td>
+            {{ det[7]  }}
+        </td>
+        <td>
+            {{ det[8]  }}
+        </td>
+        <td>
+            {{ det[9]  }}
+        </td>
+        <td>
+            {{ det[10]  }}
+        </td>
+        <td>
+            {{ det[12]  }}
+        </td>
+        <td>
+            {{ det[13]  }}
+        </td>
+        <td>
+            {{ det[14]  }}
+        </td>
+        <td>
+            {{ det[15]  }}
+        </td>
+        <td>
+            {{ det[16]  }}
+        </td>
+        <td>
+            {{ det[17]  }}
+        </td>
+        <td>
+            {{ det[18]  }}
+        </td>
+        <td>
+            {{ det[19]  }}
+        </td>
+        <td>
+            {{ det[20]  }}
+        </td>
+        <td>
+            {{ det[21]  }}
+        </td>
+        <td>
+            {{ det[22]  }}
+        </td>
+        <td>
+            {{ det[23]  }}
+        </td>
+
+
+    </tr>
+</table>
+</div>
+
+<div>
+<label><strong>Peaks' Data</strong></label>
+<table id="peaks">
+    <th>
+        Sr No
+    </th>
+    <th>
+        MZ
+    </th>
+    <th>
+        Intensity
+    </th>
+    {% for row in peak %}
+        <tr>
+            <td>
+                {{ loop.index }}
+            </td>
+
+            <td>
+                {{ row[1]    }}
+            </td>
+            <td>
+             {{  row[2]    }}
+            </td>
+
+        </tr>
+
+    {% endfor %}
+</table>
+</div>
+
+<div><a href="{{ url_for('app_bp.home') }} ">Home</a></div>
+
+{% endblock %}

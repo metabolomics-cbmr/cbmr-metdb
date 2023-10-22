@@ -1,0 +1,14 @@
+.unknown-compoune-detection-settings {
+  padding: 2em;
+
+  .rdt_TableCol {
+    background-color: #ebebeb;
+
+    div[role='columnheader'] {
+      div {
+        white-space: break-spaces;
+        overflow: visible;
+      }
+    }
+  }
+}
