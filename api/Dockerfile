@@ -12,8 +12,18 @@ RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
 COPY metabolomics/ ./metabolomics
+
 COPY wsgi.py ./
+
+# ISA API
+COPY isaapi/ ./isaapi
+
+WORKDIR /Bio-Dev/isaapi
+
+RUN pip install -r requirements.txt
+
+WORKDIR /Bio-Dev
 
 EXPOSE 5000
 
-CMD gunicorn -w 8 --bind 0.0.0.0:5000  --timeout 300 wsgi:app
+CMD python /Bio-Dev/isaapi/create_isa_tables.py && gunicorn -w 8 --bind 0.0.0.0:5000  --timeout 300 wsgi:app

@@ -1,3 +1,4 @@
+
 import API_URLS from '../constants/api.const';
 import { RECORD_NAME_API_ENUM } from '../constants/records.const';
 import {
@@ -9,6 +10,32 @@ import {
   MS2FileCompoundResponse,
   MS2FileDetails,
 } from '../model/ms2file-details.model';
+
+import {
+  ISADataDetails,
+} from '../model/isadata-details.model';
+
+import {
+  ISAStudyDetails,
+} from '../model/isadata-details.model';
+
+import {
+  ISAAssayDetails,
+} from '../model/isadata-details.model';
+
+import {
+  ISAInvResultsDetails,
+} from '../model/isadata-details.model';
+
+import {
+  ISASampleDetails,
+} from '../model/isadata-details.model';
+
+import {
+  InvOntology,
+} from '../model/isadata-details.model';
+
+
 import { ResultLog } from '../model/results.model';
 import { UnknownCompoundDetectionAPIResult } from '../model/unknown-compound-detection.model';
 import http from './http';
@@ -19,11 +46,13 @@ export const getDashboardDataAPI = () =>
 export const uploadFile = (
   url: string,
   key: string,
-  file: File,
+  file: File[],
   additionalUploadData: any = {},
 ) => {
   const formData = new FormData();
-  formData.append(key, file);
+  for (let i = 0; i <  file.length ; i++)
+    formData.append(key, file[i]);
+  
   Object.entries(additionalUploadData).forEach(([key, value]) => {
     formData.append(key, `${value}`);
   });
@@ -122,4 +151,66 @@ const downloadFile = (blob: Blob, name: string) => {
   link.href = window.URL.createObjectURL(blob);
   link.download = name;
   link.click();
+};
+
+
+export const getISADataDetails = (investigationId) => {
+  return http.get<ISADataDetails[]>(
+    `${API_URLS.ISA_DATA_DETAILS.replace('%%ID%%', investigationId)}`,
+  );
+};
+
+export const getISADataListAPI = (pagination) => {
+    return http.get<ISADataDetails[]>(`${API_URLS.ISA_DATA_LIST}/${pagination ? `${pagination}` : ''}`);
+};
+
+
+export const getISAStudyDetails = (studyId) => {
+  return http.get<ISAStudyDetails[]>(
+    `${API_URLS.ISA_STUDY_DETAILS.replace('%%ID%%', studyId)}`,
+  );
+};
+
+export const getISAAssayDetails = (assayId) => {
+  return http.get<ISAAssayDetails[]>(
+    `${API_URLS.ISA_ASSAY_DETAILS.replace('%%ID%%', assayId)}`,
+  );
+};
+
+
+export const getISAStudyAssays = (studyId) => {
+  return http.get<ISAAssayDetails[]>(
+    `${API_URLS.ISA_STUDY_ASSAYS.replace('%%ID%%', studyId)}`,
+  );
+};
+
+
+export const getISASampleDetails = (assayId, sampleId) => {
+  
+  return http.get<ISASampleDetails[]>(
+    `${API_URLS.ISA_SAMPLE_DETAILS.replace('%%ID2%%', sampleId).replace('%%ID1%%', assayId)}`,
+  );
+};
+
+
+export const getISAInvResultsDetails = (sampleId) => {
+  let tsampleId = encodeURIComponent(sampleId)  ;  
+  return http.get<ISAInvResultsDetails[]>(
+    `${API_URLS.ISA_SAMPLE_RESULTS.replace('%%ID%%', tsampleId)}`,
+  );
+};
+
+
+export const getInvOntologyData = (investigationId) => {
+  return http.get<InvOntology[]>(
+    `${API_URLS.INV_ONTOLOGY.replace('%%ID%%', investigationId)}`,
+  );
+};
+
+
+export const getAssaySampleList = (assayId) => {
+  
+  return http.get<[]>(
+    `${API_URLS.ASSAY_SAMPLE_LIST.replace('%%ID%%', assayId)}`,
+  );
 };

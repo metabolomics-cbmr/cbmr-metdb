@@ -8,18 +8,24 @@ export const SIDEBAR: ISidebarItem[] = [
     title: 'Dashboard',
     href: '/',
   },
-  {
-    id: 'Admin',
-    icon: '',
-    title: 'Admin',
-    href: '/admin',
-  },
+  // {
+  //   id: 'Admin',
+  //   icon: '',
+  //   title: 'Admin',
+  //   href: '/admin',
+  // },
   {
     id: 'Settings',
     icon: '',
     title: 'Settings',
     href: '/settings',
   },
+  {
+    id: 'ISAImport',
+    icon: '',
+    title: 'ISA Model',
+    href: '/isa',
+  }
   // {
   //   id: 'Settings',
   //   icon: '',

@@ -52,7 +52,7 @@ services:
       - "443:443"
     volumes:
       # - ./certbot:/var/www/certbot
-      - ./ssl:/app/ssl
+      # - ./ssl:/app/ssl
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - postgres

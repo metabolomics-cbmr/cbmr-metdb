@@ -1,0 +1,42 @@
+1) isatools/isatab/defaults.py    
+   allowed optional space after  'Comment' label 
+   20230713
+
+2) isatools/isatab/validate/rules/rules_40xx.py 
+   added 'Derived Data File' to the list of allowed colun headers following Protocol REF   column 
+   20230713
+
+3) isatools/isatab/validate/rules/rules_10xx.py
+   converted to uppercase the protocols declared in investigation file and protocols used in study & assay files
+   to take care of protocols not found error because of cas emismatch 
+   20230714
+
+4)isatools/database/models/source.py 
+   source inserted into database as soon as it is encountered
+   this was done to remove duplicate row error for source table 
+   20230725 
+
+5)isatools/database/models/ontology_annotation.py 
+  commented out session.add  while debugging integrity error 
+  20230725
+
+6) isatools/model/publication.py
+In definition of class, added abstract class Identifiable 
+Added id value to publication class
+in _init_ added id='' parameter and added self.id as a property
+20230812
+
+7) isatools/database/models/publication.py 
+In to_sql() 
+   added two queries    - first to fetch publication_id with the help of pubmed_id 
+   while instantiating publication object, assigned publication_id a value of self.id  
+   earlier publication_id was assigned self.doi which was always blank , sp publication id in database 
+   was blank
+
+   publication table is now queried on self.id instead of self.doi as originally done
+
+8)  isatools/database/models/characteristic.py 
+    in to_sql()
+   20230920 ... characteristic was reading not  the existing OntologyAnnotation data
+            giving a foreign key violation error
+             made changes for that... if ontoloogyannotation exists, the id is retrived and assigned to the chracteristic 

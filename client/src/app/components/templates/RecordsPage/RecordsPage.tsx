@@ -17,6 +17,8 @@ const RecordNotFound = () => (
 
 const Records = () => {
   const { recordName } = useParams<any>();
+
+  console.log(" Param used records " + recordName)
   const history = useHistory();
 
   const isRecordNameValid = recordName;

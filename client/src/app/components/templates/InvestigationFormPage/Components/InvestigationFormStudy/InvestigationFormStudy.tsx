@@ -95,6 +95,9 @@ const InvestigationFormStudy = (props: {
         hasBorder
       >
         <Input label="Title" onChange={handleStudyTitleChange} />
+
+        <Input label="Identifier"/>
+
         <TextArea label="Description" />
         <SelectBar
           label={'Publications'}

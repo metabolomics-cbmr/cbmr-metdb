@@ -32,6 +32,14 @@ const InvestigationFormGeneral = (props) => {
     <div className="investigation-form__general" ref={generalRef}>
       <Collapsible trigger="General Information" hasBorder isOpen={isOpen}>
         <Input label="Title" />
+
+        {/* 20231119 LE */}
+        <Input label="Identifier" />
+
+        <Input label="Comment name" />
+        <Input label="Comment Description" />
+
+
         <TextArea label="Description" />
         <div className="row">
           <div className="col-sm-12 col-lg-6 col-xl-4">

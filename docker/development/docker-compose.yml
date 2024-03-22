@@ -34,7 +34,7 @@ services:
     platform: linux/amd64
     image: python:3.7
     working_dir: /Bio-Dev
-    command: bash -c 'pip install -r requirements.txt && exec python3 wsgi.py'
+    command: bash -c 'pip install -r /Bio-Dev/isaapi/requirements.txt && python /Bio-Dev/isaapi/create_isa_tables.py && pip install -r requirements.txt && exec python3 wsgi.py'
     volumes: 
       - ../../api:/Bio-Dev
       # Persist the requirements.txt packages

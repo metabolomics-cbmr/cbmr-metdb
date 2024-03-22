@@ -23,54 +23,6 @@ ALTER TABLE IF EXISTS public."Configs"
 
 
 
-CREATE TABLE IF NOT EXISTS public."Assay"
-(
-    id bigserial NOT NULL,
-    study_id bigint NOT NULL,
-    measurement_type_annotation_id integer NOT NULL,
-    technology_type_annotation_id integer NOT NULL,
-    technology_platform_id integer NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Assay"
-    OWNER to postgres;CREATE TABLE IF NOT EXISTS public."Author"
-(
-    id bigserial NOT NULL,
-    name text NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Author"
-    OWNER to postgres;CREATE TABLE IF NOT EXISTS public."AuthorOrganization"
-(
-    id bigserial NOT NULL,
-    author_id bigint NOT NULL,
-    organization_id bigint NOT NULL,
-    active char(1) DEFAULT 'Y', 
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."AuthorOrganization"
-    OWNER to postgres;
 
     -- Table: public.Compound
 
@@ -138,25 +90,6 @@ COMMENT ON TABLE public."Compound"
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public."Contact"
-    OWNER to postgres;
-    CREATE TABLE IF NOT EXISTS public."ContactRole"
-(
-    id bigserial NOT NULL,
-    contact_id bigint NOT NULL,
-    role_annotation_id integer NOT NULL,
-    active char(1) not null  DEFAULT 'Y',
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."ContactRole"
-    OWNER to postgres;
     -- Table: public.DataSource
 
 -- DROP TABLE IF EXISTS public."DataSource";
@@ -174,27 +107,9 @@ ALTER TABLE IF EXISTS public."DataSource"
     OWNER to postgres;
 
 COMMENT ON TABLE public."DataSource"
-    IS 'Source of Mass Spec Data';CREATE TABLE IF NOT EXISTS public."Investigation"
-(
-    id bigserial NOT NULL,
-    title text NOT NULL,
-    description text NOT NULL,
-    submission_date timestamp without time zone NOT NULL,
-    public_release_date timestamp without time zone NOT NULL,
-    pub_list  text, 
-    contact_list text, 
-    contact_role_list text, 
-    created_by_user integer NOT NULL,
-    created_on time without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on time without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Investigation"
-    OWNER to postgres;-- Table: public.MassSpecType
+    IS 'Source of Mass Spec Data';
+    
+-- Table: public.MassSpecType
 
 -- DROP TABLE IF EXISTS public."MassSpecType";
 
@@ -516,159 +431,6 @@ CREATE INDEX IF NOT EXISTS ms2dets_id1
     TABLESPACE pg_default;
 
 
-CREATE TABLE IF NOT EXISTS public."OntologyAnnotation"
-(
-    id bigserial NOT NULL,
-    type text NOT NULL,
-    description text NOT NULL,
-    source_accession_number bigint NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."OntologyAnnotation"
-    OWNER to postgres;
-    CREATE TABLE IF NOT EXISTS public."OntologyList"
-(
-    code  varchar(30),
-    name   text,
-    created_by_user integer NULL,
-    created_on timestamp without time zone NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (code)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."OntologyList"
-    OWNER to postgres;
-    
-INSERT INTo public."OntologyList" (
-    code, name 
-) VALUES (
-    'DESIGN_TYPE', 'Design Type'
-) ;
-
-INSERT INTo public."OntologyList" (
-    code, name 
-) VALUES (
-    'DESIGN_FACTOR_TYPE', 'Design Factor Type'
-) ;
-
-INSERT INTo public."OntologyList" (
-    code, name 
-) VALUES (
-    'CONTACT_ROLE', 'Contact Role'
-) ;
-
-INSERT INTo public."OntologyList" (
-    code, name 
-) VALUES (
-    'PUB_STATUS', 'Publication Status'
-) ;
-
-INSERT INTo public."OntologyList" (
-    code, name 
-) VALUES (
-    'TECH_TYPE', 'Technology Type'
-) ;
-
-CREATE TABLE IF NOT EXISTS public."OntologySource"
-(
-    id integer NOT NULL,
-    name text NOT NULL,
-    file text NOT NULL,
-    accession_number text NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."OntologySource"
-    OWNER to postgres;
-    CREATE TABLE IF NOT EXISTS public."Organization"
-(
-    id integer NOT NULL,
-    name text NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Organization"
-    OWNER to postgres;
-
-CREATE TABLE IF NOT EXISTS public."Publication"
-(
-    pub_med_id bigint NOT NULL,
-    doi_id bigint,
-    title text NOT NULL,
-    description text NOT NULL,
-    author_list text, 
-    status_annotation_id integer NOT NULL,
-    type character NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (pub_med_id)
-)
-
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Publication"
-    OWNER to postgres;CREATE TABLE IF NOT EXISTS public."Study"
-(
-    id bigserial NOT NULL,
-    title text NOT NULL,
-    description text NOT NULL,
-    submission_date timestamp without time zone,
-    public_release_date timestamp without time zone,
-    design_type_annotation_id integer NOT NULL,
-    pub_list text,
-    contact_list text, 
-    contact_role_list text, 
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    investigation_id bigint NOT NULL,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Study"
-    OWNER to postgres;CREATE TABLE IF NOT EXISTS public."TechnologyPlatform"
-(
-    id integer NOT NULL,
-    description text NOT NULL,
-    created_by_user integer NOT NULL,
-    created_on timestamp without time zone NOT NULL,
-    updated_by_user integer,
-    updated_on timestamp without time zone,
-    PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."TechnologyPlatform"
-    OWNER to postgres;
 
 -- Table: public.UnknownMS2Mst
 
@@ -838,70 +600,6 @@ ALTER TABLE IF EXISTS public."UnknownComparisonMisc"
     OWNER to postgres;    
 BEGIN;
 
-
-ALTER TABLE IF EXISTS public."Assay"
-    ADD FOREIGN KEY (study_id)
-    REFERENCES public."Study" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-ALTER TABLE IF EXISTS public."Assay"
-    ADD FOREIGN KEY (technology_platform_id)
-    REFERENCES public."TechnologyPlatform" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-
-ALTER TABLE IF EXISTS public."Assay"
-    ADD FOREIGN KEY (measurement_type_annotation_id)
-    REFERENCES public."OntologyAnnotation" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-
-ALTER TABLE IF EXISTS public."Assay"
-    ADD FOREIGN KEY (technology_type_annotation_id)
-    REFERENCES public."OntologyAnnotation" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-END;ALTER TABLE IF EXISTS public."Contact"
-    ADD FOREIGN KEY (organization_id)
-    REFERENCES public."Organization" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-    BEGIN;
-ALTER TABLE IF EXISTS public."ContactRole"
-    ADD FOREIGN KEY (contact_id)
-    REFERENCES public."Contact" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-
-
-ALTER TABLE IF EXISTS public."ContactRole"
-    ADD FOREIGN KEY (role_annotation_id)
-    REFERENCES public."OntologyAnnotation" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
-END;
-ALTER TABLE IF EXISTS public."OntologyAnnotation"
-    ADD FOREIGN KEY (source_accession_number)
-    REFERENCES public."OntologySource" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;ALTER TABLE IF EXISTS public."Study"
-    ADD FOREIGN KEY (investigation_id)
-    REFERENCES public."Investigation" (id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
-    NOT VALID;
 
 CREATE TABLE IF NOT EXISTS public."User"
 (
@@ -1263,4 +961,4 @@ insert into "MassSpecType" (name) values('MS/MS') ;
 insert into "User" (name, email_id, pwd) values ('Lawrence Egyir', 'lawegyir@yahoo.com', 'biodevs')
 
 
-
+COMMIT

@@ -35,7 +35,7 @@
     "web-vitals": "^3.1.1"
   },
   "scripts": {
-    "start": "HOST=0.0.0.0 react-scripts start --host=0.0.0.0",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:coverage": "npm run test -- --coverage",

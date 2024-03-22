@@ -53,7 +53,12 @@ def create_app(test_config=None):
         from metabolomics.auth import auth_user
         from metabolomics import userconfig
         from metabolomics import exportdata
+        from metabolomics import isaimport
+        from metabolomics import displayisadata
+
+
         
+
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)

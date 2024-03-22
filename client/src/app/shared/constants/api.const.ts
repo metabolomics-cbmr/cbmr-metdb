@@ -14,6 +14,17 @@ const API_URLS = {
   MS2_FILE_COMPOUND: `${BASE_URL}/v1/ms2dets/%%ID%%,%20external`,
   COMPARISON_RESULTS: `${BASE_URL}/v1/resultslog/external`,
   GET_COMPARISION_SETTINGS: `${BASE_URL}/v1/compareconfig`,
+  UPLOAD_ISA: `${BASE_URL}/v1/isafiles/external`,  
+  ISA_DATA_DETAILS: `${BASE_URL}/v1/isadata/%%ID%%,%20external`,
+  ISA_DATA_LIST: `${BASE_URL}/v1/isadata`,  
+  ISA_STUDY_DETAILS:`${BASE_URL}/v1/isastudy/%%ID%%,%20external`,
+  ISA_ASSAY_DETAILS:`${BASE_URL}/v1/isaassay/%%ID%%,%20external`,
+  ISA_STUDY_ASSAYS:`${BASE_URL}/v1/isastudyassay/%%ID%%,%20external`,
+  ISA_SAMPLE_RESULTS:`${BASE_URL}/v1/isasampleresults/%%ID%%,%20external`,
+  ISA_SAMPLE_DETAILS:`${BASE_URL}/v1/isasample/%%ID1%%, %%ID2%%,%20external`,
+  INV_ONTOLOGY:`${BASE_URL}/v1/isaontology/%%ID%%,%20external`,
+  ASSAY_SAMPLE_LIST:`${BASE_URL}/v1/assaysamples/%%ID%%,%20external`
+
 };
 
 export default API_URLS;

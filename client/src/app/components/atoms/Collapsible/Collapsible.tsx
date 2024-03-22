@@ -58,7 +58,7 @@ const Collapsible = ({
 
   return (
     <div
-      className={`collapsible--custom ${
+      className={ ` w-100 collapsible--custom ${
         hasBorder ? 'collapsible--custom--bordered' : ''
       }`}
     >

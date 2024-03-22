@@ -22,7 +22,7 @@ const DataUploader = ({
   children?: any;
   isSaveButtonEnabled?: boolean;
 }) => {
-  const [fileToUpload, setFileToUpload] = useState(null);
+  const [fileToUpload, setFileToUpload] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [saveButtonText, setSaveButtonText] = useState('Save');
   const uploadDataFile = async () => {

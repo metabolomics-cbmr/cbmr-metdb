@@ -1,0 +1,24 @@
+.arrow-left {
+  height: 22px;
+  cursor: pointer;
+}
+
+
+.text-wrap 
+{ 
+  // white-space: normal; 
+  text-wrap:wrap;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.invid-align
+{
+  width:85px;
+  text-align:right;
+}
+
+// click event of the data table div must be fired
+.noclick {
+  pointer-events: none;
+}

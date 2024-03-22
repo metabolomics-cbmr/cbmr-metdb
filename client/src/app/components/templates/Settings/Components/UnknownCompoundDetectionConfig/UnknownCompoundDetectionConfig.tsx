@@ -40,6 +40,9 @@ const UnknownCompoundDetectionConfig = ({
           <td className="p-3 table-text">
             <SettingsFormInput
               value={comparisionSettings.matching_peaks}
+              min="1"
+              max="100"
+              step="1"
               onChange={(matching_peaks) => {
                 updateComparisonSettings?.({ matching_peaks });
               }}
@@ -52,6 +55,8 @@ const UnknownCompoundDetectionConfig = ({
           <td className="p-3 table-text">
             <SettingsFormInput
               value={comparisionSettings.matching_score}
+              min="0.10"
+              max="1.00"
               onChange={(matching_score) => {
                 updateComparisonSettings?.({ matching_score });
               }}

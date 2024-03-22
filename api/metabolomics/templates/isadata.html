@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %} Investigation Details {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <table id="scanmst">
+        <tr>
+            <th>	Investigation Id	</th>
+            <th>	Identifier	</th>
+            <th>    Title</th>
+        </tr>
+        <tr>
+            <td> {{ mst["investigation_id"] }}  </td>
+            <td> {{ mst["identifier"] }}  </td>
+            <td> {{ mst["title"] }}  </td>
+        </tr>
+    </table>
+</div>
+
+<h3>Details</h3>
+<div>
+<table id="scandet">
+    <tr>
+        <th>	ISA Identifier	</th>
+        <th>	Description	</th>
+        <th>	Submission Date	</th>
+        <th>	Pubic Release Date	</th>
+    </tr>
+
+    {% for row in det %}
+        <tr>
+            <td> {{ row["isa_identifier"] }}  </td>
+            <td> {{ row["description"] }}  </td>
+            <td> {{ row["submission_date"] }}  </td>
+            <td> {{ row["public_release_date"] }}  </td>
+        </tr>
+
+    {% endfor %}
+  
+</table>
+</div>
+
+
+
+<div><a href="{{ url_for('app_bp.home') }}">Home</a></div>
+
+
+{% endblock %}

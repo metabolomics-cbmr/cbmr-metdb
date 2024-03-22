@@ -62,3 +62,33 @@ def get_cursor(conn, cursor_type=None):
         raise Exception("Invalid cursor type passed")
     
     return cur 
+
+def get_sqlalchemy_conn_str(filename="database.ini", section="sqlalchemy_postgres"):
+    try:
+
+        print(' in parser parameeee ' + section)
+        parser = ConfigParser()
+        parser.read("metabolomics/" + filename)
+        
+        #dictionary
+        dbconn = {}
+        if parser.has_section(section):
+            params = parser.items(section)
+            #print(current_app)
+            for param in params:
+                #if not current_app == None:
+                    #current_app.logger.info(' in parser param ')
+
+                dbconn[param[0]] = param[1]
+                #print(param[0], param[1])
+        else:
+            print("no section")
+
+        current_app.logger.info(" DB Connection %s ", dbconn)
+
+        conn_str = dbconn["ddriver"] + "://"  + dbconn["user_name"]  + ":" + dbconn["password"] + "@" + dbconn["host"] + "/" + dbconn["database"]
+
+        return conn_str 
+
+    except Exception as ex:
+        raise ex 

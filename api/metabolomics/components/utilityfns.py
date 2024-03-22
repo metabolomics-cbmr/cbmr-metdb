@@ -1,6 +1,7 @@
 from werkzeug.utils import secure_filename
 import traceback
 import sys
+import uuid 
 
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and \
@@ -9,6 +10,9 @@ def allowed_file(filename, allowed_extensions):
 
 def get_uploaded_file(request):
     return request.files['file']
+
+def get_uploaded_files(request):
+    return request.files.getlist("file") 
 
 
 def is_file_uploaded(request):
@@ -28,3 +32,7 @@ def get_unhandled_exception_details():
     err["description"] = (''.join(traceback.format_exception(*exc_info)))        
     err["details"] = err["description"]
     return err 
+
+
+def get_unique_id():
+    return str(uuid.uuid1())
