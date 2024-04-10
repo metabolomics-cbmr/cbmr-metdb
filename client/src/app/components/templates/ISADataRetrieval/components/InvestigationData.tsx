@@ -6,7 +6,10 @@ import { ISADataDetails } from '../../../../shared/model/isadata-details.model';
 import LazyCollapsible from '../../../atoms/LazyCollapsible';
 import Study from './Study' ;
 import OntologyReference from './OntologyReference' ;
-import Sample from './Sample' ;
+import InvPublications from './InvPublications' ;
+import InvContacts from './InvContacts' ;
+
+
 import '../ISADataRetrieval.style.scss';
 
 const  InvestigationData = ({investigationId}) => {
@@ -15,7 +18,8 @@ const  InvestigationData = ({investigationId}) => {
 
     const [isaDataDetails, setISADataDetails] = useState<ISADataDetails[]>([]);
     const [invStudies, setInvStudies] = useState([]);
-    const [invSamples, setInvSamples] = useState([]);
+    const [invPublications, setInvPublications] = useState([]);
+    const [invContacts, setInvContacts] = useState([]);
 
 
     const getISADataList = useCallback(async  () => {
@@ -26,7 +30,9 @@ const  InvestigationData = ({investigationId}) => {
             console.log(isaDataDetails["mst"]) ;
             setISADataDetails(isaDataDetails["mst"]) ; 
             setInvStudies(isaDataDetails["dets"]) ; 
-            setInvSamples(isaDataDetails["results"]) ; 
+            setInvPublications(isaDataDetails["publications"]) ; 
+            setInvContacts(isaDataDetails["contacts"]) ; 
+
 
         } catch (error) {
             alert('Could not get ISA Data Details');
@@ -93,6 +99,28 @@ const  InvestigationData = ({investigationId}) => {
             >
                 <OntologyReference  investigationId={investigationId} />
             </LazyCollapsible>
+
+
+            {invPublications.length?
+            <LazyCollapsible
+              trigger={<span className="table-header-text">Publications</span>}
+              
+            >
+                <InvPublications  investigationId={investigationId} />
+            </LazyCollapsible>
+            :"" 
+            }
+
+            {invContacts.length?
+            <LazyCollapsible
+              trigger={<span className="table-header-text">Contacts</span>}
+              
+            >
+                <InvContacts  investigationId={investigationId} />
+            </LazyCollapsible>
+            :"" 
+            }
+
 
 
 

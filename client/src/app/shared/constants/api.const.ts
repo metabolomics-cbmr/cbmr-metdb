@@ -23,7 +23,11 @@ const API_URLS = {
   ISA_SAMPLE_RESULTS:`${BASE_URL}/v1/isasampleresults/%%ID%%,%20external`,
   ISA_SAMPLE_DETAILS:`${BASE_URL}/v1/isasample/%%ID1%%, %%ID2%%,%20external`,
   INV_ONTOLOGY:`${BASE_URL}/v1/isaontology/%%ID%%,%20external`,
-  ASSAY_SAMPLE_LIST:`${BASE_URL}/v1/assaysamples/%%ID%%,%20external`
+  ASSAY_SAMPLE_LIST:`${BASE_URL}/v1/assaysamples/%%ID%%,%20external`,
+  INV_PUBLICATIONS: `${BASE_URL}/v1/invpublications/%%ID%%,%20external`,
+  INV_CONTACTS: `${BASE_URL}/v1/invcontacts/%%ID%%,%20external` , 
+  STUDY_PUBLICATIONS: `${BASE_URL}/v1/studypublications/%%ID%%,%20external`,
+  STUDY_CONTACTS: `${BASE_URL}/v1/studycontacts/%%ID%%,%20external`  
 
 };
 

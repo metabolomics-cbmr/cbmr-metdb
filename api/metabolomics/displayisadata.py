@@ -109,6 +109,31 @@ def displayinvestigation(invid, client):
         curr.execute(stmt, (invid,))
         invresults = curr.fetchall() 
 
+
+        #fetch publications
+        stmt = " select  publication_id "
+        stmt += "     from investigation_publications "
+        stmt += "      where investigation_id = %s " 
+        stmt += " limit 1 "
+
+        curr.execute(stmt, (invid,))
+        invpubl = curr.fetchall() 
+
+
+        #fetch contacts
+        stmt = " select  person_id "
+        stmt += "     from person  "
+        stmt += "      where investigation_id = %s " 
+        stmt += " limit 1 "
+
+        curr.execute(stmt, (invid,))
+        invcontacts = curr.fetchall() 
+
+
+        #fetch contacts 
+
+
+
         # dets = []
         # curr.execute(sql, (invid,))
         # ms2dets = curr.fetchall()
@@ -118,7 +143,8 @@ def displayinvestigation(invid, client):
         output["mst"] = ms2mst
         output["dets"] = invstudy
         output["results"] = invresults 
-
+        output["publications"] = invpubl 
+        output["contacts"] = invcontacts
         return jsonify(output)
 
 
@@ -165,6 +191,25 @@ def displaystudy(studyId, client):
         curr.execute(stmt, (studyId,))
         protocols = curr.fetchall() 
 
+        #fetch publications
+        stmt = " select  publication_id "
+        stmt += "     from study_publications "
+        stmt += "      where study_id = %s " 
+        stmt += " limit 1 "
+
+        curr.execute(stmt, (studyId,))
+        publications = curr.fetchall() 
+
+
+        #fetch contacts
+        stmt = " select  person_id "
+        stmt += "     from person  "
+        stmt += "      where study_id = %s " 
+        stmt += " limit 1 "
+
+        curr.execute(stmt, (studyId,))
+        contacts = curr.fetchall() 
+
 
         # dets = []
         # curr.execute(sql, (invid,))
@@ -175,6 +220,8 @@ def displaystudy(studyId, client):
         output["mst"] = ms2mst
         output["dets"] = studyassay
         output["protocols"] = protocols 
+        output["publications"] = publications
+        output["contacts"] = contacts
 
         return jsonify(output)
 
@@ -492,5 +539,159 @@ def get_study_ptotocols(studyid, client):
 
 
 
+@app_bp.route("/invpublications/<invid>, <client>")
+def get_inv_publications(invid, client):
+    try:
+        conn = None
+        conn = get_db_conn()
 
+        curr = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+
+        #fetch publications
+        stmt = " select publ.author_list, doi, pubmed_id, title,   onto.annotation_value "
+        stmt += "     from investigation_publications  inv_publ  "
+        stmt += "           inner join publication publ   on inv_publ.publication_id = publ.publication_id "
+        stmt += "           inner join ontology_annotation onto   on publ.status_id = onto.ontology_annotation_id "
+        stmt += "      where inv_publ.investigation_id = %s "
+
+        curr.execute(stmt, (invid,))
+        invpubl = curr.fetchall() 
+
+
+        output = {}
+        output["publications"] = invpubl
+
+
+        return jsonify(output)
+
+
+    except(Exception,psycopg2.DatabaseError) as err:
+        if not conn is None:
+            if conn.closed == 0:
+                close_db_conn(conn)
+
+        if client == "flask":
+            raise err
+        
+        e_dict = get_unhandled_exception_details()
+        return jsonify(e_dict), 500
+
+
+@app_bp.route("/invcontacts/<invid>, <client>")
+def get_inv_contacts(invid, client):
+    try:
+        conn = None
+        conn = get_db_conn()
+
+        curr = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+
+        #fetch publications
+        stmt = " select person.person_id, coalesce(last_name, '') as last_name , coalesce(first_name, '') as  first_name , "
+        stmt += " coalesce(mid_initials, '') as mid_initials,  email, phone, fax, address, affiliation, onto.annotation_value  as person_role"
+        stmt += "     from person  "
+        stmt += "           inner join person_roles role   on person.person_id = role.person_id "
+        stmt += "           inner join ontology_annotation onto   on role.role_id = onto.ontology_annotation_id "
+        stmt += "      where person.investigation_id = %s "
+
+        curr.execute(stmt, (invid,))
+        invpubl = curr.fetchall() 
+
+
+        output = {}
+        output["contacts"] = invpubl
+
+
+        return jsonify(output)
+
+
+    except(Exception,psycopg2.DatabaseError) as err:
+        if not conn is None:
+            if conn.closed == 0:
+                close_db_conn(conn)
+
+        if client == "flask":
+            raise err
+        
+        e_dict = get_unhandled_exception_details()
+        return jsonify(e_dict), 500
+
+
+
+@app_bp.route("/studypublications/<invid>, <client>")
+def get_study_publications(studyid, client):
+    try:
+        conn = None
+        conn = get_db_conn()
+
+        curr = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+
+        #fetch publications
+        stmt = " select publ.author_list, doi, pubmed_id, title,   onto.annotation_value "
+        stmt += "     from study_publications  study_publ  "
+        stmt += "           inner join publication publ   on study_publ.publication_id = publ.publication_id "
+        stmt += "           inner join ontology_annotation onto   on publ.status_id = onto.ontology_annotation_id "
+        stmt += "      where study_publ.study_id = %s "
+
+        curr.execute(stmt, (studyid,))
+        studypubl = curr.fetchall() 
+
+
+        output = {}
+        output["publications"] = studypubl
+
+
+        return jsonify(output)
+
+
+    except(Exception,psycopg2.DatabaseError) as err:
+        if not conn is None:
+            if conn.closed == 0:
+                close_db_conn(conn)
+
+        if client == "flask":
+            raise err
+        
+        e_dict = get_unhandled_exception_details()
+        return jsonify(e_dict), 500
+
+
+
+
+@app_bp.route("/studycontacts/<studyid>, <client>")
+def get_study_contacts(studyid, client):
+    try:
+        conn = None
+        conn = get_db_conn()
+
+        curr = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+
+        #fetch publications
+        stmt = " select person.person_id, coalesce(last_name, '') as last_name , coalesce(first_name, '') as  first_name , "
+        stmt += " coalesce(mid_initials, '') as mid_initials,  email, phone, fax, address, affiliation, onto.annotation_value  as person_role"
+        stmt += "     from person  "
+        stmt += "           inner join person_roles role   on person.person_id = role.person_id "
+        stmt += "           inner join ontology_annotation onto   on role.role_id = onto.ontology_annotation_id "
+        stmt += "      where person.study_id = %s "
+
+        curr.execute(stmt, (studyid,))
+        invpubl = curr.fetchall() 
+
+
+        output = {}
+        output["contacts"] = invpubl
+
+
+        return jsonify(output)
+
+
+    except(Exception,psycopg2.DatabaseError) as err:
+        if not conn is None:
+            if conn.closed == 0:
+                close_db_conn(conn)
+
+        if client == "flask":
+            raise err
+        
+        e_dict = get_unhandled_exception_details()
+        return jsonify(e_dict), 500
 

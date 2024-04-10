@@ -5,7 +5,7 @@ import './Collapsible.style.scss';
 const CollapsibleTrigger = (props) => {
   const { trigger } = props;
   return (
-    <div className="collapsible-trigger--inner">
+    <div className='collapsible-trigger--inner'>
       {trigger}
       <span className="material-icons trigger-icon">keyboard_arrow_down</span>
     </div>
@@ -19,15 +19,15 @@ const Collapsible = ({
   id,
   onOpen = () => {},
   onClose = () => {},
-  hasBorder = false,
-}: {
+  hasBorder = false
+  }: {
   trigger: any;
   children: any;
   isOpen?: boolean;
   id?: any;
   onOpen?: any;
   onClose?: any;
-  hasBorder?: boolean;
+  hasBorder?: boolean
 }) => {
   const [open, setOpen] = useState(false);
   const reactCollapsibleRef = React.createRef<ReactCollapsible>();

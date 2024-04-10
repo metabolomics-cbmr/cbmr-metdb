@@ -89,6 +89,27 @@ export interface InvOntology {
   description:string
 }
 
+export interface Publication{
+
+  authorList:string, 
+  doi: string,
+  pubMedId: string,
+  title:string,
+  status:string
+}
+
+export interface Contact{
+
+  name:string, 
+  email:string,
+  phone:string,
+  fax:string,
+  address:string, 
+  affiliation:string,
+  role:string
+}
+
+
 // /**
 //  * MS2 File Single Compound Response based on the id from the compound list.
 //  */

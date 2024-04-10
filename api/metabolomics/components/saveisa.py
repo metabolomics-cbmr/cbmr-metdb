@@ -92,7 +92,7 @@ def results_file_import(inv_id, results_file_path):
         cur = conn.cursor()
 
         #fetch all assays and their results xlsx file for this investigation 
-        stmt = " select distinct adtf.assay_id, dtf.filename  from assay_data_files adtf "
+        stmt = " select distinct adtf.assay_id, dtf.filename, dtf.datafile_id   from assay_data_files adtf "
         stmt += " join datafile dtf  on  adtf.data_file_id = dtf.datafile_id  "
         stmt += " join study_assays on study_assays.assay_id = adtf.assay_id  "
         stmt += " join study on study_assays.study_id = study.study_id  "
@@ -109,6 +109,8 @@ def results_file_import(inv_id, results_file_path):
         for a_row  in a_rows:
             assay_id = a_row[0]
             filename = os.path.join(results_file_path, a_row[1])
+
+            data_file_id = a_row[2]
 
             no_path_file_name = filename[filename.rfind("\\")+1:len(filename)]
 
@@ -131,6 +133,8 @@ def results_file_import(inv_id, results_file_path):
                 compound_id =  0
                 current_time = datetime.datetime.now()
 
+                df = results["feature.info"]
+                save_compounds(df, conn)
 
                 df =results["datatable"]
 
@@ -149,6 +153,12 @@ def results_file_import(inv_id, results_file_path):
                     while col_number != num_columns - 1:
                         col_number += 1
                         compound_name = column_names[col_number]
+
+                        sql = " select id from \"Compound\" where name = %s "
+                        cur.execute(sql, (compound_name, ))
+                        compound_id = cur.fetchone()[0]
+
+
                         intensity = df.iat[index, col_number]
                         print(f' Compound name  - {compound_name} - Intensity - {intensity}')
 
@@ -168,26 +178,38 @@ def results_file_import(inv_id, results_file_path):
                         sample_id = sample_row[0]
                         print(f'SampleId {sample_id}')
 
-                        compound_id = 1     #dummy value 
                         
-                        #print(f"Assay Id {assay_id}")
+                        current_app.logger.info(f"TTT Assay Id {assay_id}")
 
-                        #use sample_name to get aget assay id using assay_data_files, datafiles
-                        stmt = " select data_file_id  from assay_data_files   adtf  "
-                        stmt += " join datafile dtf  on  adtf.data_file_id = dtf.datafile_id "
-                        stmt += " where dtf.filename = %s  and adtf.assay_id = %s and dtf.label= 'Derived Data File'"
+                        # #use sample_name to get aget assay id using assay_data_files, datafiles
+                        # stmt = " select data_file_id  from assay_data_files   adtf  "
+                        # stmt += " join datafile dtf  on  adtf.data_file_id = dtf.datafile_id "
+                        # stmt += " where dtf.filename = %s  and adtf.assay_id = %s and dtf.label= 'Derived Data File'"
 
-                        cur.execute(stmt, (no_path_file_name, assay_id))
-                        datafile_row = cur.fetchone()
+                        # stmt = "select "
+
+                        # cur.execute(stmt, (no_path_file_name.strip(), assay_id))
+
+                        # current_app.logger.info(f' {cur.rowcount} RESULT FILE IMPORT')
+                        # data_file_id = ""
+                        # if cur.rowcount > 0:
+                        #     datafile_row = cur.fetchone()
+                        #     data_file_id = datafile_row[0]
+                        # else:
+                        #     raise Exception (f"Derived Data file {no_path_file_name} for assay {assay_id} not found")
+
+                        # current_app.logger.info(f"after wow if sssss")
+
 
                         #print(datafile_row)
-                        data_file_id = datafile_row[0]
+                        #data_file_id = datafile_row[0]
 
                         current_time = datetime.datetime.now()
 
                         stmt = " insert into \"PeakTableMerge\" (sample_id, compound_id, assay_id, data_file_id,  intensity, compound_name, date_time)"
                         stmt += " values(%s, %s, %s, %s, %s, %s, %s)"
 
+                        #cur.execute(stmt, (sample_id, compound_id, assay_id, data_file_id, intensity, compound_name, current_time))
                         cur.execute(stmt, (sample_id, compound_id, assay_id, data_file_id, intensity, compound_name, current_time))
 
 
@@ -270,3 +292,87 @@ def results_file_import(inv_id, results_file_path):
 #     except(Exception,psycopg2.DatabaseError) as err:
 #         raise err
 
+
+def save_compounds(df, conn):
+    try:    
+        for index in range(len(df)):
+
+            compound_id = 0
+            cur = conn.cursor()
+            sql = " select id from \"Compound\" where name = %s "
+            cur.execute(sql, (df['Compound.name'].loc[index].strip(), ))
+
+            if cur.rowcount > 0:
+                #current_app.logger.info('%s  found in master', df['Compound.name'].loc[index].strip() )
+                compound_id = cur.fetchone()[0]
+
+                #MS1 excel does not have all valid values for compound.name_corrected , sp disabled 
+                #until data is corrected 20221026
+                #if (not df['Compound.name_corrected'].loc[index].strip() == ""):
+                #    compound_name = df['Compound.name_corrected'].loc[index].strip()
+
+            polarity = df['Identifier'].loc[index][0:3]
+
+            adduct_fa= None
+            adduct_na = None
+            adduct_k = None
+            adduct_h = None
+            frag_loss_h2o = None
+            frag_loss_hcooh = None
+            frag_loss_fa = None
+
+
+            # check if data is string nan or numeric NaN
+            pc_url = ''
+
+            pc_cid = ''
+
+
+            pc_sid = ''
+            cas = ''
+            kegg_csid = ''
+            hmdb_ymdb_id = ''
+            metlin_id = ''
+            chebi = ''
+            smiles = ''
+            inchi_key = ''
+            cls_chem_taxnmy = ''
+            sub_cls_chem_taxnmy = ''
+            supp_cat_no = ''          
+            supp_prod_name = ''
+            bio_locations = ''
+            tissue_locations = ''
+            canonical_smiles = ''
+            extra_pc_cid  = ''
+
+            sql = "call public.\"SaveCompound\" ( %s, %s, %s, %s, \
+                            %s, %s, %s, \
+                            %s, %s, %s, \
+                            %s, %s, %s,\
+                            %s, %s, %s, %s, \
+                            %s, %s, %s, %s, \
+                            %s, %s, \
+                            %s, %s, \
+                            %s, %s,  \
+                            %s, %s, %s) "
+
+            cur.execute(sql, (compound_id, df['Compound.name'].loc[index].strip(), polarity, df['Molecular.formula'].loc[index],  \
+                        0.00, adduct_h, adduct_na, \
+                        adduct_k, adduct_fa, frag_loss_h2o, \
+                        frag_loss_hcooh, pc_cid, pc_url, \
+                        pc_sid, cas, kegg_csid, hmdb_ymdb_id, \
+                        metlin_id, chebi, smiles,inchi_key, \
+                        cls_chem_taxnmy,  sub_cls_chem_taxnmy, \
+                        supp_cat_no, supp_prod_name, \
+                        bio_locations, tissue_locations, \
+                        extra_pc_cid, frag_loss_fa, canonical_smiles))                            
+            
+            if compound_id == 0:
+                compound_id = cur.fetchone()[0]
+
+
+    except(Exception,psycopg2.DatabaseError) as err:
+        raise err
+
+
+    

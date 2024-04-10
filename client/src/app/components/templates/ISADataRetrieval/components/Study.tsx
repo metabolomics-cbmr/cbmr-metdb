@@ -1,6 +1,8 @@
 import { getISAStudyDetails } from '../../../../shared/utils/api.utils';
 import LazyCollapsible from '../../../atoms/LazyCollapsible';
 import Assay from './Assay' ;
+import StudyPublications from './StudyPublications' ;
+import StudyContacts from './StudyContacts' ;
 import { ISAStudyDetails } from '../../../../shared/model/isadata-details.model';
 import { useEffect, useState, useCallback  } from "react" ;
 import Card from '../../../atoms/Card';
@@ -47,6 +49,7 @@ const StudyRow = ({studyId, title, description, identifier,
         : ""}
 
 
+
           {assays ? 
           <tr className="w-100">
             <td colSpan={5} className="w-100">
@@ -74,6 +77,8 @@ const Study = ({studyId}) => {
   const [isaStudyDetails, setISAStudyData] = useState<ISAStudyDetails[]>([]);
   const [isaStudyAssays, setISAAssays] = useState<[]>([]);
   const [studyProtocols, setStudyProtocols] = useState<[]>([]);
+  const [studyPublications, setStudyPublications] = useState([]);
+  const [studyContacts, setStudyContacts] = useState([]);
 
 
   const getISAStudyData = useCallback(async  () => {
@@ -85,6 +90,9 @@ const Study = ({studyId}) => {
           setISAStudyData(isaStudyDataDetails["mst"]) ; 
           setISAAssays(isaStudyDataDetails["dets"]) ; 
           setStudyProtocols(isaStudyDataDetails["protocols"]) ; 
+          setStudyPublications(isaStudyDataDetails["publications"]) ; 
+          setStudyContacts(isaStudyDataDetails["contacts"]) ; 
+
 
       } catch (error) {
           alert('Could not get ISA Data Details');
@@ -148,6 +156,27 @@ const Study = ({studyId}) => {
 
             </tbody>
           </table>
+          {studyPublications.length?
+            <LazyCollapsible
+              trigger={<span className="table-header-text">Publications</span>}
+              
+            >
+                <StudyPublications  studyId={studyId} />
+            </LazyCollapsible>
+            :"" 
+            }
+
+            {studyContacts.length?
+            <LazyCollapsible
+              trigger={<span className="table-header-text">Contacts</span>}
+              
+            >
+                <StudyContacts  studyId={studyId} />
+            </LazyCollapsible>
+            :"" 
+            }
+
+
           </Card>
 
       </div>

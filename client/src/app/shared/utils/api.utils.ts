@@ -35,6 +35,10 @@ import {
   InvOntology,
 } from '../model/isadata-details.model';
 
+import {
+  Publication, Contact
+} from '../model/isadata-details.model';
+
 
 import { ResultLog } from '../model/results.model';
 import { UnknownCompoundDetectionAPIResult } from '../model/unknown-compound-detection.model';
@@ -212,5 +216,31 @@ export const getAssaySampleList = (assayId) => {
   
   return http.get<[]>(
     `${API_URLS.ASSAY_SAMPLE_LIST.replace('%%ID%%', assayId)}`,
+  );
+};
+
+export const getInvPublicationData = (investigationId) => {
+  return http.get<Publication[]>(
+    `${API_URLS.INV_PUBLICATIONS.replace('%%ID%%', investigationId)}`,
+  );
+};
+
+
+export const getInvContactData = (investigationId) => {
+  return http.get<Contact[]>(
+    `${API_URLS.INV_CONTACTS.replace('%%ID%%', investigationId)}`,
+  );
+};
+
+export const getStudyPublicationData = (studyId) => {
+  return http.get<Publication[]>(
+    `${API_URLS.STUDY_PUBLICATIONS.replace('%%ID%%', studyId)}`,
+  );
+};
+
+
+export const getStudyContactData = (studyId) => {
+  return http.get<Contact[]>(
+    `${API_URLS.STUDY_CONTACTS.replace('%%ID%%', studyId)}`,
   );
 };
