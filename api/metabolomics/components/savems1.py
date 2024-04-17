@@ -8,21 +8,25 @@ import pytz
 from metabolomics.my_exceptions import InputError
 from metabolomics.components.db import close_db_conn, get_db_conn
 
-def file_import(file_name):
+def file_import(file_name, method_id):
     no_path_file_name = file_name[file_name.rfind("\\")+1:len(file_name)]
     polarity_list = ["POS", "NEG"]
     
     try:
 
-
+        #read all the sheets in the MS1 Excel file 
         ms = pd.read_excel(file_name, sheet_name=None)
 
 
         conn=None 
+
+        #open database connection 
         conn = get_db_conn()
 
+        #vreate cursor to run commands
         cur = conn.cursor()
 
+        # check if MS1 fil eis already uploaded 
         qry = "select id from \"MS1Mst\" where file_name = %s "
         cur.execute(qry, (no_path_file_name,))
         if cur.rowcount > 0:
@@ -31,11 +35,12 @@ def file_import(file_name):
         compound_id =  0
         dt = current_time = datetime.datetime.now()
 
-        sql = " insert into \"MS1Mst\" ( file_name, import_date, user_id) VALUES (%s, %s, %s)  returning id "
-        cur.execute(sql, (no_path_file_name, dt, 1))
+        sql = " insert into \"MS1Mst\" ( file_name, import_date, user_id, method_id) VALUES (%s, %s, %s, %s)  returning id "
+        cur.execute(sql, (no_path_file_name, dt, 1, method_id))
         ms1_mst_id = cur.fetchone()[0]
 
 
+        #read all sheets in the XLS and save relevant data in database 
         for polarity in polarity_list:
 
             process_ms1_data(ms, polarity, ms1_mst_id, conn)

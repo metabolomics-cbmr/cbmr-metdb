@@ -22,6 +22,26 @@ ALTER TABLE IF EXISTS public."Configs"
     OWNER to postgres;
 
 
+-- Table: public.Method
+CREATE TABLE IF NOT EXISTS public."Method"
+(
+    id smallserial NOT NULL ,
+    name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    method character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    lc_time numeric(6,2)  NULL,
+    lc_temp numeric(6,2) NULL,
+    name_sop character varying(100) COLLATE pg_catalog."default"  NULL,
+    instrument_name character varying(100) COLLATE pg_catalog."default"  NULL,
+    active boolean DEFAULT true,
+    solvents json,
+    CONSTRAINT "Methods_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Method"
+    OWNER to postgres;
+
 
 
     -- Table: public.Compound
@@ -136,7 +156,14 @@ CREATE TABLE IF NOT EXISTS public."MS1Mst"
     file_name text COLLATE pg_catalog."default" NOT NULL,
     import_date timestamp without time zone NOT NULL,
     user_id integer,
-    CONSTRAINT "MS1Mast_pkey" PRIMARY KEY (id)
+    method_id smallint,
+    CONSTRAINT "MS1Mast_pkey" PRIMARY KEY (id),
+    CONSTRAINT method_id FOREIGN KEY (method_id)
+        REFERENCES public."Method" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+
 )
 
 TABLESPACE pg_default;
@@ -232,6 +259,7 @@ CREATE TABLE IF NOT EXISTS public."MS2Mst"
     file_name character varying COLLATE pg_catalog."default",
     import_date timestamp without time zone,
     num_spectra_in_file integer  NOT NULL,
+    method_id smallint,
     CONSTRAINT "MS2Mst_pkey" PRIMARY KEY (id),
     CONSTRAINT "MS2Mst_data_source_id_fkey" FOREIGN KEY (data_source_id)
         REFERENCES public."DataSource" (id) MATCH SIMPLE
@@ -240,7 +268,13 @@ CREATE TABLE IF NOT EXISTS public."MS2Mst"
     CONSTRAINT "MS2Mst_mass_spec_type_id_fkey" FOREIGN KEY (mass_spec_type_id)
         REFERENCES public."MassSpecType" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT method_id FOREIGN KEY (method_id)
+        REFERENCES public."Method" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE NO ACTION
+        NOT VALID
+
 )
 
 TABLESPACE pg_default;
@@ -449,6 +483,7 @@ CREATE TABLE IF NOT EXISTS public."UnknownMS2Mst"
     peak_prefilter_hist_url text COLLATE pg_catalog."default",
     peak_postfilter_hist_url text COLLATE pg_catalog."default",
     num_spectra_in_file integer  NOT NULL,
+    method_id smallint,
     CONSTRAINT "UnknownMS2Mst_pkey" PRIMARY KEY (id),
     CONSTRAINT "UnknownMS2Mst_data_source_id_fkey" FOREIGN KEY (data_source_id)
         REFERENCES public."DataSource" (id) MATCH SIMPLE
@@ -457,7 +492,13 @@ CREATE TABLE IF NOT EXISTS public."UnknownMS2Mst"
     CONSTRAINT "UnknownMS2Mst_mass_spec_type_id_fkey" FOREIGN KEY (mass_spec_type_id)
         REFERENCES public."MassSpecType" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT method_id FOREIGN KEY (method_id)
+        REFERENCES public."Method" (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
         ON DELETE NO ACTION
+        NOT VALID
+
 )
 
 TABLESPACE pg_default;
@@ -4190,6 +4231,26 @@ insert into "Configs" (name, type, config, active, created_by) values('default',
 insert into "DataSource" (name) values('NA');
 insert into "MassSpecType" (name) values('MS/MS') ;
 insert into "User" (name, email_id, pwd) values ('Lawrence Egyir', 'lawegyir@yahoo.com', 'biodevs');
+
+INSERT INTO public."Method"(
+	 name, method, active)
+values('RP',	'RP',	true);
+
+INSERT INTO public."Method"(
+	 name, method, active)
+values('GC',	'GC',	true);
+
+INSERT INTO public."Method"(
+	 name, method, active)
+values('LIP',	'LIP',	true);
+
+INSERT INTO public."Method"(
+	 name, method, active)
+values('HILIC',	'HILIC',	true);
+	
+
+
+
 
 
 COMMIT

@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/lawtrea/Bio-Dev/issues"
   },
-  "homepage": "https://github.com/lawtrea/Bio-Dev#readme"
+  "homepage": "https://github.com/lawtrea/Bio-Dev#readme",
+  "dependencies": {
+    "react-tooltip": "^5.26.3"
+  }
 }

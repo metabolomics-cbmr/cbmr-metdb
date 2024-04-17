@@ -3,4 +3,5 @@ export interface ResultLog {
   file_name: string;
   id: number;
   import_date: string;
+  method:string;
 }

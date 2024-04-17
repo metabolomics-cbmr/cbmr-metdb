@@ -10,11 +10,13 @@ from metabolomics.components.utilityfns import *
 from metabolomics.my_exceptions import InputError, CustomException 
 
 
+#not invoked from the  GUI, used to test the flask app
 @app_bp.route("/selectms1")
 def selectms1():
    return render_template("uploadms1.html")
 
 
+#invoked from the GUI
 @app_bp.route("/upload_ms1/<from_client>", methods=['POST'])
 def uploadms1(from_client):
     #if request.method == 'POST':
@@ -33,7 +35,7 @@ def uploadms1(from_client):
             raise CustomException("No file part found to upload")
         #current_app.logger.info('file in  request ')
 
-        #file = request.files['file']
+        #retrieve the file that has been uploaded 
         file = get_uploaded_file(request)
 
         # If the user does not select a file, the browser submits an
@@ -46,17 +48,21 @@ def uploadms1(from_client):
         
         current_app.logger.info('%s in POST ', file.filename )
 
-        #if file and allowed_file(file.filename):
+        #remove any characters from filename that can cause a security risk
         filename = get_secure_file_name(file.filename)
         current_app.logger.info('%s secure  ',  filename )
 
         filepath = os.path.join(upload_folder, filename) 
 
+        method_id = request.form["method"]
+
+        # save the file on the server 
         file.save(filepath)
 
         current_app.logger.info('after save ')
 
-        ms1_mst_id = file_import(filepath)  # master id regturned from savems1
+        # read the data in the excel and save it to postgres 
+        ms1_mst_id = file_import(filepath, method_id)  # master id regturned from savems1
 
         return redirect(url_for('app_bp.displayms1', id=ms1_mst_id, client=from_client))
     

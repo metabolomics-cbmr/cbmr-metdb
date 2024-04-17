@@ -27,6 +27,11 @@ const ResultsLogDataTable = ({ results }: { results: ResultLog[] }) => {
       sortable: true,
     },
     {
+      name: 'Method',
+      selector: (row: ResultLog) => row.method,
+      sortable: true,
+    },
+    {
       name: 'File Name',
       selector: (row: ResultLog) => formatFileName(row.file_name),
       sortable: true,

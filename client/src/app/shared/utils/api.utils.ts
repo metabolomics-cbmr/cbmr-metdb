@@ -12,32 +12,13 @@ import {
 } from '../model/ms2file-details.model';
 
 import {
-  ISADataDetails,
+  ISADataDetails, ISAStudyDetails, ISAAssayDetails, ISAInvResultsDetails, 
+      ISASampleDetails, InvOntology, Publication, Contact 
 } from '../model/isadata-details.model';
 
 import {
-  ISAStudyDetails,
-} from '../model/isadata-details.model';
-
-import {
-  ISAAssayDetails,
-} from '../model/isadata-details.model';
-
-import {
-  ISAInvResultsDetails,
-} from '../model/isadata-details.model';
-
-import {
-  ISASampleDetails,
-} from '../model/isadata-details.model';
-
-import {
-  InvOntology,
-} from '../model/isadata-details.model';
-
-import {
-  Publication, Contact
-} from '../model/isadata-details.model';
+  Method 
+} from '../model/methods.model';
 
 
 import { ResultLog } from '../model/results.model';
@@ -239,8 +220,18 @@ export const getStudyPublicationData = (studyId) => {
 };
 
 
+
 export const getStudyContactData = (studyId) => {
   return http.get<Contact[]>(
     `${API_URLS.STUDY_CONTACTS.replace('%%ID%%', studyId)}`,
   );
 };
+
+export const getMethods = () => {
+  return http.get<Method[]>(
+    `${API_URLS.METHODS}`,
+  );
+};
+
+
+

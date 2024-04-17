@@ -17,9 +17,11 @@ def get_results( client, id=0, page=0, count=0):
         #     raise Exception("Incorrect parameter values")
 
         offset = (int(page) - 1) * int(count )
-        qry = "select import_date, file_name, id, file_format from \"UnknownMS2Mst\"  "
+        qry = "select import_date, file_name, ums2.id, file_format, tmethod.method  from \"UnknownMS2Mst\"  ums2 "
+        qry += "  inner join \"Method\"  tmethod on  ums2.method_id = tmethod.id "
+
         if int(id) > 0:
-            qry  = qry + " where id = %s "
+            qry  = qry + " where ums2.id = %s "
         
         qry = qry + " order by import_date desc "
 

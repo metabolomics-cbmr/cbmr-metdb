@@ -10,6 +10,7 @@ import useResultsLogSearch from '../hooks/ResultsLogSearch.hook';
 const columns = [
   <th className="p-3">#</th>,
   <th className="p-3">Comparison Id</th>,
+  <th className="p-3">Method</th>,
   <th className="p-3">File Name</th>,
   <th className="p-3">File Format</th>,
   <th className="p-3">Comparison Date</th>,
@@ -31,6 +32,9 @@ const ResultLogRow = ({
     </th>
     <td className="p-3 text-info font-weight-bold text-right">
       {resultLogEntry.id}
+    </td>
+    <td className="p-3">
+    {resultLogEntry.method}
     </td>
     <td className="p-3">
       <FileName>{resultLogEntry.file_name}</FileName>

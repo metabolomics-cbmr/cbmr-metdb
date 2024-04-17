@@ -55,7 +55,7 @@ def create_app(test_config=None):
         from metabolomics import exportdata
         from metabolomics import isaimport
         from metabolomics import displayisadata
-
+        from metabolomics import methods
 
         
 

@@ -66,11 +66,12 @@ def upload_ums2(from_client):
         form_data = request.form
         
         compareid = form_data["config"]
+        method_id = form_data["method"]
         #current_app.logger.info('%s compareid  ',  form_data )
 
 
         #data = process_unknown_compound(filepath)  #from compare_comound
-        ms2mst_id = process_unknown_compound(filepath, compareid)  #from compare_comound
+        ms2mst_id = process_unknown_compound(filepath, compareid, method_id)  #from compare_comound
         
         if from_client == 'flask':
             return redirect(url_for('app_bp.display_results', id=ms2mst_id, client=from_client))

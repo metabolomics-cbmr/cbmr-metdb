@@ -7,6 +7,7 @@ export const FILE_DETAILS_MAP = {
   import_date: 'Import date',
   mass_spectype_name: 'Mass Spec type',
   predicted_experimental: 'Pred or Expr',
+  method: "Method"
   // spectrum_id: 'Spectrum Id',
 };
 

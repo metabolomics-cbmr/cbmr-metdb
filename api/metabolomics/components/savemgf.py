@@ -13,7 +13,7 @@ def get_mgf_data(file_name):
     return list(load_from_mgf(file_name))
 
 
-def  import_unknown_compound_ms2(file_name):
+def  import_unknown_compound_ms2(file_name, method_id):
     try:
         spectrums = get_mgf_data(file_name)
 
@@ -23,7 +23,7 @@ def  import_unknown_compound_ms2(file_name):
             raise InputError("One or more spectrum data does not contain peaks. Upload cancelled")
 
 
-        ms2mst_id = save_ms2(spectrums, file_name, "")
+        ms2mst_id = save_ms2(spectrums, file_name, "", method_id)
 
         return ms2mst_id 
 
@@ -31,7 +31,7 @@ def  import_unknown_compound_ms2(file_name):
         raise err
 
 
-def import_known_compound_ms2(file_name, compound_name):
+def import_known_compound_ms2(file_name, compound_name, method_id):
 
     try:
 
@@ -43,7 +43,7 @@ def import_known_compound_ms2(file_name, compound_name):
             raise InputError("One or more spectrum data does not contain peaks. Upload cancelled")
 
 
-        ms2mst_id = save_ms2(spectrums, file_name, compound_name)
+        ms2mst_id = save_ms2(spectrums, file_name, compound_name, method_id)
 
         return ms2mst_id     
 
@@ -51,7 +51,7 @@ def import_known_compound_ms2(file_name, compound_name):
         raise err
 
 
-def save_ms2(spectrums, file_name, pcompound_name):
+def save_ms2(spectrums, file_name, pcompound_name, method_id=None):
 
     try:
 
@@ -86,9 +86,12 @@ def save_ms2(spectrums, file_name, pcompound_name):
             compounds = {}
             compounds = get_compounds(spectrums, pcompound_name, conn)
 
+
             if len(compounds["not_found"]) > 0:
+                # at least one compound missing in database 
                 if len(compounds["found"]) != 0:
-                    # if some compounds are nissing in the compound table ignore for now
+                    # if some compounds are missing in the compound table ignore for now
+                    # we have at least compound which is foun din the database 
                     current_app.logger.info(' %s missing compounds', ','.join(compounds['not_found']))
                     #raise InputError(f"Compounds not found in database {','.join(compounds['not_found'])}")
                 else:
@@ -113,22 +116,26 @@ def save_ms2(spectrums, file_name, pcompound_name):
         pred_or_exp = ""
 
         if is_library_data == True:
+            # known compound data 
             ms2mst_table = "MS2Mst"
             ms2dets_table = "MS2Dets"
             ms2peak_table = "MS2Peak"
             pred_or_exp = "P"
         else:
+
+            # mgf of compnoud to be compared 
             ms2mst_table = "UnknownMS2Mst"
             ms2dets_table = "UnknownMS2Dets"
             ms2peak_table = "UnknownMS2Peak"
             pred_or_exp = "E"
 
+
         qry = sql.SQL(" insert into {table} ( data_source_id, predicted_experimental, mass_spec_type_id, \
-                spectrum_id, file_format, file_name, import_date, num_spectra_in_file)   \
-                VALUES ( %s, %s, %s, %s, %s, %s, %s, %s) \
+                spectrum_id, file_format, file_name, import_date, num_spectra_in_file, method_id)   \
+                VALUES ( %s, %s, %s, %s, %s, %s, %s, %s, %s) \
                 returning id ").format(table=sql.Identifier(ms2mst_table))
 
-        curr.execute(qry, (1, pred_or_exp, 1, 0, '.mgf', no_path_file_name, dt, num_spectra))
+        curr.execute(qry, (1, pred_or_exp, 1, 0, '.mgf', no_path_file_name, dt, num_spectra, method_id))
         ms2mst_id = curr.fetchone()[0]
             
 
@@ -147,7 +154,7 @@ def save_ms2(spectrums, file_name, pcompound_name):
             #     continue 
             #     #raise Exception("Data for " + compound_name + " - Scan Index " +  str(spectrum.metadata["scanindex"]) + "already exists")
 
-            peaks_count = 0
+            peaks_count = 0         #  store None
             peak_index = 0
             peak_id = ""
 
@@ -237,6 +244,7 @@ def get_compounds(spectrums, pcompound_name, conn):
         #if one spectrum in file has compound_name element, it is assumed that all spectra in that file 
         #will have the compound_name element
         if "compound_name" in spectrums[0].metadata:
+            # if spectra data contains compound name
 
             for spectrum in spectrums:
 
@@ -247,11 +255,14 @@ def get_compounds(spectrums, pcompound_name, conn):
                 if curr.rowcount == 1:
                     compounds_found[comp_name] = curr.fetchone()[0]
                 elif curr.rowcount == 0:
+                    # compound is not foundin the database 
                     current_app.logger.info(' %s missing ', comp_name)
                     compounds_missing.append(comp_name)
                 else:
                     raise CustomException(f"Multiple rows found for compound {comp_name}")
         else:
+            # if spectra data does not contain compound name
+
             qry = " select id from \"Compound\"  where name = %s"
             curr.execute(qry, (pcompound_name,))
             if curr.rowcount == 1:

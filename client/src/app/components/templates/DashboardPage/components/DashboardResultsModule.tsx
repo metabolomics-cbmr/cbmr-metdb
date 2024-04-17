@@ -17,7 +17,8 @@ const DashboardResultsModule = () => {
       <DashboardModule
         index={2}
         title="Results Retrieval"
-        description="Check the results of your completed experiments. You can download them in csv or other compatible formats or you can use our analytics online."
+        description="Check the results of your completed experiments. <br/> You can download them in csv <br/>or other compatible formats <br/>or you can use our analytics online."
+        tooltipId="results_tooltip"
         bottomControls={
           <></>
           // <BottomTip

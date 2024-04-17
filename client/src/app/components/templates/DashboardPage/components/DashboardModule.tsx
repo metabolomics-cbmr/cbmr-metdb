@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import Card from '../../../atoms/Card';
 import ModuleGradient from '../../../atoms/ModuleGradient';
+import Tooltip from '../../../atoms/Tooltip';
+import InformationImage from '../../../../../assets/images/information_small.png';
 
 const DashboardModule = (props: {
   href?: string;
@@ -10,6 +12,7 @@ const DashboardModule = (props: {
   moduleImage: any;
   bottomControls: any;
   onClick?: any;
+  tooltipId:string
 }) => {
   const {
     index,
@@ -19,6 +22,7 @@ const DashboardModule = (props: {
     bottomControls,
     moduleImage,
     onClick,
+    tooltipId,
   } = props;
   const LinkWrapper = ({ children }) =>
     href ? (
@@ -32,8 +36,13 @@ const DashboardModule = (props: {
     <LinkWrapper>
       <Card className="dashboard-module" key={index} onClick={onClick}>
         <div className="dashboard-module__left">
-          <p className="dashboard-module__title">{title}</p>
-          <p className="dashboard-module__subtitle">{description}</p>
+          <p className="dashboard-module__title">{title} &nbsp;
+          {/* <p className="dashboard-module__subtitle">{description}</p> */}
+          <Tooltip content={description} id={tooltipId}>
+            <img src={InformationImage} alt="Information"></img>
+
+          </Tooltip>
+          </p>
           {bottomControls}
         </div>
         <ModuleGradient className="dashboard-module__right text-center">

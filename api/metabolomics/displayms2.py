@@ -15,10 +15,11 @@ def displayms2list(mstid, client):
 
         sql = " select  sc.id, ds.name data_source_name, sc.predicted_experimental, \
                 mst.name mass_spectype_name, \
-				sc.file_name, sc.import_date  \
+				sc.file_name, sc.import_date, tmethod.method   \
                 from \"MS2Mst\" sc   \
                     inner join \"DataSource\" ds on sc.data_source_id = ds.id  \
                     inner join \"MassSpecType\" mst on sc.mass_spec_type_id = mst.id \
+                    inner join \"Method\" tmethod  on sc.method_id = tmethod.id \
                   where sc.id = %s "
 
         curr.execute(sql, (mstid,))

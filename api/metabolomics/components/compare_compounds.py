@@ -18,11 +18,11 @@ from metabolomics.my_exceptions import InputError, CustomException
 import numpy as np
 
 
-def process_unknown_compound(unknown_ms2_file, compareid):
+def process_unknown_compound(unknown_ms2_file, compareid, method_id):
     try:
         conn = None 
 
-        ms2mst_id  = import_unknown_compound_ms2(unknown_ms2_file)
+        ms2mst_id  = import_unknown_compound_ms2(unknown_ms2_file, method_id)
 
         conn = get_db_conn()
         cur = conn.cursor()
@@ -42,7 +42,7 @@ def process_unknown_compound(unknown_ms2_file, compareid):
 
             qry_spectrums.append(spectrum)
 
-        output = compare_compounds(qry_spectrums, conn, ms2mst_id, compareid)
+        output = compare_compounds(qry_spectrums, conn, ms2mst_id, compareid, method_id)
         #save unknown mgf
         #save results
 
@@ -60,7 +60,7 @@ def process_unknown_compound(unknown_ms2_file, compareid):
                close_db_conn(conn)
         raise err
 
-def compare_compounds(qry_spectrums, conn, ms2mst_id, compareid):
+def compare_compounds(qry_spectrums, conn, ms2mst_id, compareid, method_id):
 
     try:
         cur = conn.cursor()
@@ -145,15 +145,18 @@ def compare_compounds(qry_spectrums, conn, ms2mst_id, compareid):
             filter_to = float(precursor_mass[0]) + float(config["pep_mass_tolerance"][1])
 
             #select compounds for comparison based on precursor mass
-            sql = "select distinct md.compound_id, cm.name, cm.smiles\
+            sql = "select distinct md.compound_id, cm.name, cm.smiles \
                     from \"MS1Dets\" md \
+                        inner join \"MS1Mst\"  ms \
+                            on md.ms1_mst_id = ms.id \
                             inner join \"Compound\" cm  \
                                 on md.compound_id = cm.id  \
                     where md.library_mz between %s and %s  and ms2_available = 'Y' \
+                            and ms.method_id = %s  \
                                 order by md.compound_id "
                     
 
-            cur.execute(sql, (filter_from, filter_to))
+            cur.execute(sql, (filter_from, filter_to, method_id))
             
             mstrows = cur.fetchall()
             if len(mstrows) == 0:
@@ -189,11 +192,12 @@ def compare_compounds(qry_spectrums, conn, ms2mst_id, compareid):
                 #         from \"MS2Dets\" m2dt \
                 #         join \"MS2Mst\" m2m on m2dt.ms2mst_id = m2m.id  \
                 #         where m2m.compound_id = %s "
-                sql = " select m2dt.*   \
+                sql = " select distinct m2dt.*   \
                         from \"MS2Dets\" m2dt \
-                        where m2dt.compound_id = %s "
+                            inner join \"MS2Mst\"  ms2ms on  m2dt.ms2mst_id = ms2ms.id \
+                        where m2dt.compound_id = %s  and ms2ms.method_id = %s"
 
-                cur.execute(sql, (compound_id,))
+                cur.execute(sql, (compound_id, method_id))
             
                 ms2detrows = cur.fetchall()
                 if len(ms2detrows) == 0:

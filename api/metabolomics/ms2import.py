@@ -21,6 +21,7 @@ def upload_ms2(from_client):
     #if request.method == 'POST':
     allowed_extensions = ["mgf"]
     try:
+        #get path where the uploaded file is to be saved
         upload_folder = os.path.normpath(os.path.join(os.getcwd(),"metabolomics/uploads")) 
 
         current_app.logger.info('in POST ')
@@ -34,6 +35,8 @@ def upload_ms2(from_client):
         current_app.logger.info('file in  request ')
 
         #file = request.files['file']
+
+        #retrieve the file contents
         file = get_uploaded_file(request)
 
         # If the user does not select a file, the browser submits an
@@ -50,9 +53,10 @@ def upload_ms2(from_client):
 
         # if file name does not contain collision ebnergy suffix, use file name as compound name 
         if file.filename.find("_") == -1:
+            #  filename does not contain collission energy
             compound_name =  file.filename    
         else:
-            #extract compound_nme from file name 
+            #extract compound_name from file name 
             compound_name =  file.filename[0:file.filename.find("_")]
 
 
@@ -62,14 +66,18 @@ def upload_ms2(from_client):
 
         filepath = os.path.join(upload_folder, filename) 
 
+        # save it on the hard drive
         file.save(filepath)
 
         current_app.logger.info('after save ')
 
-        id = import_known_compound_ms2(filepath, compound_name)  # from savemgf
+        method_id = request.form["method"]
+        current_app.logger.info(f' Method used {file.filename} - {method_id}' )
+
+        id = import_known_compound_ms2(filepath, compound_name, method_id)  # from savemgf
 
 
-
+        # data has been saved,  now return the details of the data that has been saved
         return redirect(url_for('app_bp.displayms2list', mstid=id, client=from_client))
 
     except InputError as err:

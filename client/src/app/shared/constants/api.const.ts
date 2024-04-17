@@ -27,7 +27,8 @@ const API_URLS = {
   INV_PUBLICATIONS: `${BASE_URL}/v1/invpublications/%%ID%%,%20external`,
   INV_CONTACTS: `${BASE_URL}/v1/invcontacts/%%ID%%,%20external` , 
   STUDY_PUBLICATIONS: `${BASE_URL}/v1/studypublications/%%ID%%,%20external`,
-  STUDY_CONTACTS: `${BASE_URL}/v1/studycontacts/%%ID%%,%20external`  
+  STUDY_CONTACTS: `${BASE_URL}/v1/studycontacts/%%ID%%,%20external` ,
+  METHODS:`${BASE_URL}/v1/method`,   
 
 };
 
